@@ -1,0 +1,52 @@
+<div class="bg-slate-900 text-white min-h-screen">
+  <!-- Navbar -->
+  <nav class="flex items-center justify-between p-6 max-w-7xl mx-auto">
+    <div class="text-2xl font-bold tracking-tighter text-red-500">
+      SUSHI<span class="text-white">CLOUD</span>
+    </div>
+    <div class="hidden md:flex gap-8 font-medium">
+      <a routerLink="/" class="hover:text-red-500 transition-colors">Inicio</a>
+      <a routerLink="/menu" class="hover:text-red-500 transition-colors">Menú</a>
+      <a *ngIf="authService.isLoggedIn()" routerLink="/my-orders" class="hover:text-red-500 transition-colors">Mis Órdenes</a>
+    </div>
+    <div class="flex items-center gap-4">
+      <a routerLink="/cart" class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-full font-semibold transition-all shadow-[0_0_15px_rgba(239,68,68,0.5)]">
+        Carrito
+      </a>
+      <a *ngIf="!authService.isLoggedIn()" routerLink="/login" class="text-white hover:text-red-500 font-semibold transition-colors">
+        Iniciar Sesión
+      </a>
+      <button *ngIf="authService.isLoggedIn()" (click)="logout()" class="text-slate-400 hover:text-white font-semibold transition-colors">
+        Salir
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="relative overflow-hidden flex items-center justify-center min-h-[80vh]">
+    <div class="absolute inset-0 z-0">
+      <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Sushi Background" class="w-full h-full object-cover opacity-30" />
+      <div class="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent"></div>
+    </div>
+    
+    <div class="relative z-10 text-center max-w-3xl px-6">
+      <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
+        El Mejor Sushi, <br/>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500">
+          Directo a tu Puerta.
+        </span>
+      </h1>
+      <p class="text-lg md:text-xl text-slate-300 mb-10">
+        Preparado al momento con ingredientes premium. Disfruta de la auténtica experiencia japonesa sin salir de casa.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a routerLink="/menu" class="bg-red-500 hover:bg-red-600 px-8 py-4 rounded-full font-bold text-lg transition-transform hover:scale-105 shadow-[0_0_20px_rgba(239,68,68,0.4)]">
+          Ver Menú Completo
+        </a>
+        <a routerLink="/promotions" class="bg-white/10 hover:bg-white/20 backdrop-blur-md px-8 py-4 rounded-full font-bold text-lg transition-all border border-white/10">
+          Ver Promociones
+        </a>
+      </div>
+    </div>
+  </header>
+</div>
