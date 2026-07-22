@@ -23,6 +23,11 @@ app.use('/api/promotions', require('./routes/promotions'));
 app.use('/api/orders', require('./routes/orders'));
 app.use('/api/upload', require('./routes/upload'));
 
+app.use((err, req, res, next) => {
+  console.error('Unhandled error:', err);
+  res.status(500).json({ message: 'Error interno del servidor: ' + (err.message || 'Desconocido') });
+});
+
 const PORT = process.env.PORT || 3000;
 
 sequelize.sync({ force: false }).then(() => {
