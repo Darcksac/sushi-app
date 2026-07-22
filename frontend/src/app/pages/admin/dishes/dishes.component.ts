@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
 import { AuthService } from '../../../services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-dishes',
@@ -66,7 +67,12 @@ export class DishesComponent implements OnInit {
         },
         error: (err) => {
           console.error(err);
-          alert('Error al subir imagen: ' + (err.error?.message || err.message));
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al subir imagen',
+            text: err.error?.message || err.message,
+            confirmButtonColor: '#ef4444'
+          });
           this.isUploading = false;
         }
       });
@@ -103,31 +109,71 @@ export class DishesComponent implements OnInit {
     if (this.isEditing) {
       this.apiService.updateDish(this.currentDish.id, this.currentDish, token).subscribe({
         next: () => {
+          Swal.fire({
+            icon: 'success',
+            title: '¡Actualizado!',
+            text: 'El platillo se ha actualizado correctamente.',
+            showConfirmButton: false,
+            timer: 1500
+          });
           this.loadDishes();
           this.closeModal();
         },
-        error: (err) => alert('Error: ' + err.message)
+        error: (err) => {
+          Swal.fire({ icon: 'error', title: 'Error', text: err.message, confirmButtonColor: '#ef4444' });
+        }
       });
     } else {
       this.apiService.createDish(this.currentDish, token).subscribe({
         next: () => {
+          Swal.fire({
+            icon: 'success',
+            title: '¡Creado!',
+            text: 'El platillo se ha creado correctamente.',
+            showConfirmButton: false,
+            timer: 1500
+          });
           this.loadDishes();
           this.closeModal();
         },
-        error: (err) => alert('Error: ' + err.message)
+        error: (err) => {
+          Swal.fire({ icon: 'error', title: 'Error', text: err.message, confirmButtonColor: '#ef4444' });
+        }
       });
     }
   }
 
   deleteDish(id: number) {
-    if (!confirm('¿Estás seguro de que quieres eliminar este platillo permanentemente?')) return;
-    
-    const token = this.authService.getToken();
-    if (!token) return;
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'No podrás revertir esto, el platillo se eliminará permanentemente.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#ef4444',
+      cancelButtonColor: '#94a3b8',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const token = this.authService.getToken();
+        if (!token) return;
 
-    this.apiService.deleteDish(id, token).subscribe({
-      next: () => this.loadDishes(),
-      error: (err) => alert('Error: ' + err.message)
+        this.apiService.deleteDish(id, token).subscribe({
+          next: () => {
+            Swal.fire({
+              title: '¡Eliminado!',
+              text: 'El platillo ha sido eliminado.',
+              icon: 'success',
+              showConfirmButton: false,
+              timer: 1500
+            });
+            this.loadDishes();
+          },
+          error: (err) => {
+            Swal.fire({ icon: 'error', title: 'Error', text: err.message, confirmButtonColor: '#ef4444' });
+          }
+        });
+      }
     });
   }
 

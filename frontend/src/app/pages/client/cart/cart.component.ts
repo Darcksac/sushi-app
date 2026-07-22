@@ -6,6 +6,8 @@ import { ApiService } from '../../../services/api.service';
 import { AuthService } from '../../../services/auth.service';
 import { Router, RouterModule } from '@angular/router';
 
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-cart',
   standalone: true,
@@ -132,18 +134,33 @@ export class CartComponent {
           this.longitude = position.coords.longitude;
         },
         (error) => {
-          alert('No pudimos obtener tu ubicación. Por favor, permite el acceso al GPS en tu navegador.');
+          Swal.fire({
+            icon: 'warning',
+            title: 'Ubicación requerida',
+            text: 'No pudimos obtener tu ubicación. Por favor, permite el acceso al GPS en tu navegador.',
+            confirmButtonColor: '#ef4444'
+          });
           console.error(error);
         }
       );
     } else {
-      alert('Tu navegador no soporta geolocalización.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Tu navegador no soporta geolocalización.',
+        confirmButtonColor: '#ef4444'
+      });
     }
   }
 
   submitOrder() {
     if (!this.latitude || !this.longitude) {
-      alert('Por favor comparte tu ubicación antes de confirmar la orden.');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Falta ubicación',
+        text: 'Por favor comparte tu ubicación antes de confirmar la orden.',
+        confirmButtonColor: '#ef4444'
+      });
       return;
     }
 
@@ -169,12 +186,26 @@ export class CartComponent {
       next: () => {
         this.cartService.clearCart();
         this.loading = false;
-        alert('¡Orden creada con éxito! El administrador la revisará pronto.');
-        this.router.navigate(['/']);
+        
+        Swal.fire({
+          icon: 'success',
+          title: '¡Orden Exitosa!',
+          text: '¡Tu orden ha sido enviada al administrador y pronto será preparada!',
+          confirmButtonColor: '#10b981',
+          timer: 3000,
+          showConfirmButton: false
+        }).then(() => {
+          this.router.navigate(['/']);
+        });
       },
       error: (err) => {
         this.loading = false;
-        alert('Error al crear la orden: ' + (err.error?.message || 'Error desconocido'));
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al ordenar',
+          text: err.error?.message || 'Ha ocurrido un error al procesar tu orden.',
+          confirmButtonColor: '#ef4444'
+        });
       }
     });
   }
