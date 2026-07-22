@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mis Pedidos - Sushi App</title>
+    <title>Mis Pedidos - SushiPekiteki</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -46,7 +46,7 @@
 </head>
 <body>
     <div class="navbar">
-        <h2>🍣 Sushi App</h2>
+        <h2>🍣 SushiPekiteki</h2>
         <div class="nav-links">
             <a href="{{ route('dashboard') }}">Menú</a>
             <a href="{{ route('client.history') }}" class="active">Mis Pedidos</a>

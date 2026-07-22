@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión - Sushi App</title>
+    <title>Iniciar Sesión - SushiPekiteki</title>
     <style>
         body {
             margin: 0;

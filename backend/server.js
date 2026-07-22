@@ -13,7 +13,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Basic Route
 app.get('/', (req, res) => {
-  res.send('Sushi App Backend Running');
+  res.send('SushiPekiteki Backend Running');
 });
 
 // Import Routes
