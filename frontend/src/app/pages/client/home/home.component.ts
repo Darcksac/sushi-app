@@ -12,6 +12,11 @@ import { CommonModule } from '@angular/common';
 })
 export class HomeComponent {
   authService = inject(AuthService);
+  isMenuOpen = false;
+  
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
   
   logout() {
     this.authService.logout();
