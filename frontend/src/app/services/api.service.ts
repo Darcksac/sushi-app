@@ -36,6 +36,12 @@ export class ApiService {
     });
   }
 
+  getMyCoupons(token: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/coupons/my-coupons`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  }
+
   getAdminOrders(token: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/orders/all`, {
       headers: { Authorization: `Bearer ${token}` }

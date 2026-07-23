@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../../../services/cart.service';
@@ -65,13 +65,38 @@ import Swal from 'sweetalert2';
                 <span>Subtotal</span>
                 <span>$ {{ cartService.total() }}</span>
               </div>
+              <div *ngIf="discountAmount > 0" class="flex justify-between text-emerald-400 font-medium">
+                <span>Descuento (Sushi Gratis)</span>
+                <span>- $ {{ discountAmount }}</span>
+              </div>
               <div class="flex justify-between text-slate-300">
                 <span>Envío</span>
                 <span>Gratis</span>
               </div>
               <div class="border-t border-slate-700 pt-4 flex justify-between font-bold text-xl">
                 <span>Total</span>
-                <span class="text-red-500">$ {{ cartService.total() }}</span>
+                <span class="text-red-500">$ {{ finalTotal }}</span>
+              </div>
+            </div>
+            
+            <div *ngIf="coupons.length > 0" class="mb-6 bg-slate-800 p-4 rounded-xl border border-dashed border-red-500/50">
+              <h4 class="text-red-400 font-bold mb-2 flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path></svg>
+                Tus Cupones Disponibles
+              </h4>
+              <div class="flex flex-wrap gap-2">
+                <span *ngFor="let c of coupons" (click)="couponCodeInput = c.code" class="bg-red-500/20 text-red-300 px-3 py-1 rounded cursor-pointer hover:bg-red-500/30 transition-colors font-mono text-sm border border-red-500/30">
+                  {{ c.code }}
+                </span>
+              </div>
+            </div>
+
+            <div class="mb-8">
+              <label class="block text-sm font-medium text-slate-300 mb-2">Código de Descuento</label>
+              <div class="flex gap-2">
+                <input type="text" [(ngModel)]="couponCodeInput" [disabled]="appliedCoupon" placeholder="Ej. FREE-SUSHI-XYZ" class="w-full bg-slate-800 border-none rounded-xl py-3 px-4 text-white focus:ring-2 focus:ring-red-500 disabled:opacity-50 uppercase" />
+                <button *ngIf="!appliedCoupon" (click)="applyCoupon()" class="bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 px-6 rounded-xl transition-colors">Aplicar</button>
+                <button *ngIf="appliedCoupon" (click)="removeCoupon()" class="bg-red-500/20 text-red-500 hover:bg-red-500/30 font-bold py-3 px-6 rounded-xl transition-colors border border-red-500/30">Quitar</button>
               </div>
             </div>
             
@@ -107,7 +132,7 @@ import Swal from 'sweetalert2';
     </div>
   `
 })
-export class CartComponent {
+export class CartComponent implements OnInit {
   cartService = inject(CartService);
   apiService = inject(ApiService);
   authService = inject(AuthService);
@@ -117,6 +142,62 @@ export class CartComponent {
   loading = false;
   latitude: number | null = null;
   longitude: number | null = null;
+  
+  coupons: any[] = [];
+  couponCodeInput = '';
+  appliedCoupon: any = null;
+  discountAmount = 0;
+
+  ngOnInit() {
+    if (this.authService.isLoggedIn()) {
+      this.fetchCoupons();
+    }
+  }
+
+  fetchCoupons() {
+    const token = this.authService.getToken();
+    this.apiService.getMyCoupons(token!).subscribe({
+      next: (res) => this.coupons = res,
+      error: (err) => console.error('Error fetching coupons', err)
+    });
+  }
+
+  applyCoupon() {
+    if (!this.couponCodeInput) return;
+    const coupon = this.coupons.find(c => c.code === this.couponCodeInput);
+    if (!coupon) {
+      Swal.fire({ icon: 'error', title: 'Cupón Inválido', text: 'El código ingresado no existe o ya fue usado.', confirmButtonColor: '#ef4444' });
+      return;
+    }
+    
+    // Calculate max sushi price
+    let maxSushiPrice = 0;
+    for (const item of this.cartService.items()) {
+      if (item.dish.category === 'Sushis' && item.dish.price > maxSushiPrice) {
+        maxSushiPrice = item.dish.price;
+      }
+    }
+    
+    if (maxSushiPrice === 0) {
+      Swal.fire({ icon: 'warning', title: 'Atención', text: 'Necesitas tener al menos un platillo de categoría Sushis en tu carrito para usar este cupón.', confirmButtonColor: '#ef4444' });
+      return;
+    }
+    
+    this.appliedCoupon = coupon;
+    this.discountAmount = maxSushiPrice;
+    Swal.fire({ icon: 'success', title: 'Cupón Aplicado', text: 'Se ha descontado el sushi más caro de tu orden.', confirmButtonColor: '#10b981' });
+  }
+
+  removeCoupon() {
+    this.appliedCoupon = null;
+    this.discountAmount = 0;
+    this.couponCodeInput = '';
+  }
+
+  get finalTotal() {
+    const total = this.cartService.total() - this.discountAmount;
+    return total < 0 ? 0 : total;
+  }
 
   updateQuantity(dishId: number, quantity: number) {
     this.cartService.updateQuantity(dishId, quantity);
@@ -181,7 +262,8 @@ export class CartComponent {
       items, 
       requestedDeliveryTime,
       latitude: this.latitude,
-      longitude: this.longitude
+      longitude: this.longitude,
+      couponCode: this.appliedCoupon?.code
     }, token!).subscribe({
       next: () => {
         this.cartService.clearCart();

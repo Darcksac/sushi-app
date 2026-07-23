@@ -29,6 +29,12 @@ const Promotion = sequelize.define('Promotion', {
   isActive: { type: DataTypes.BOOLEAN, defaultValue: true }
 });
 
+const Coupon = sequelize.define('Coupon', {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  code: { type: DataTypes.STRING, unique: true, allowNull: false },
+  isUsed: { type: DataTypes.BOOLEAN, defaultValue: false }
+});
+
 const Order = sequelize.define('Order', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   totalAmount: { type: DataTypes.FLOAT, allowNull: false },
@@ -48,10 +54,13 @@ const OrderItem = sequelize.define('OrderItem', {
 User.hasMany(Order);
 Order.belongsTo(User);
 
+User.hasMany(Coupon);
+Coupon.belongsTo(User);
+
 Order.hasMany(OrderItem);
 OrderItem.belongsTo(Order);
 
 Dish.hasMany(OrderItem);
 OrderItem.belongsTo(Dish);
 
-module.exports = { User, Dish, Promotion, Order, OrderItem, sequelize };
+module.exports = { User, Dish, Promotion, Order, OrderItem, Coupon, sequelize };

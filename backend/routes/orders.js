@@ -1,5 +1,5 @@
 const express = require('express');
-const { Order, OrderItem, Dish, User } = require('../models');
+const { Order, OrderItem, Dish, User, Coupon } = require('../models');
 const { verifyToken, isAdmin } = require('../middleware/authMiddleware');
 
 const router = express.Router();
@@ -7,7 +7,7 @@ const router = express.Router();
 // Client: Create order
 router.post('/', verifyToken, async (req, res) => {
   try {
-    const { items, requestedDeliveryTime, latitude, longitude } = req.body;
+    const { items, requestedDeliveryTime, latitude, longitude, couponCode } = req.body;
     let totalAmount = 0;
     
     // Calculate total
@@ -15,6 +15,31 @@ router.post('/', verifyToken, async (req, res) => {
       const dish = await Dish.findByPk(item.dishId);
       if (dish) {
         totalAmount += dish.price * item.quantity;
+      }
+    }
+
+    // Apply Coupon
+    if (couponCode) {
+      const coupon = await Coupon.findOne({ where: { code: couponCode, UserId: req.userId, isUsed: false } });
+      if (coupon) {
+        // Find most expensive sushi in the cart
+        let maxSushiPrice = 0;
+        for (const item of items) {
+          const dish = await Dish.findByPk(item.dishId);
+          if (dish && dish.category === 'Sushis' && dish.price > maxSushiPrice) {
+            maxSushiPrice = dish.price;
+          }
+        }
+        
+        if (maxSushiPrice > 0) {
+          totalAmount -= maxSushiPrice;
+          if (totalAmount < 0) totalAmount = 0;
+          await coupon.update({ isUsed: true });
+        } else {
+          return res.status(400).json({ error: 'El cupón requiere al menos un platillo de categoría Sushis en el carrito.' });
+        }
+      } else {
+        return res.status(400).json({ error: 'Cupón inválido o ya ha sido usado.' });
       }
     }
 
@@ -82,6 +107,21 @@ router.put('/:id/status', verifyToken, isAdmin, async (req, res) => {
     if (!order) return res.status(404).json({ message: 'Order not found' });
     
     await order.update({ status });
+    
+    if (status === 'completed') {
+      const completedCount = await Order.count({
+        where: { UserId: order.UserId, status: 'completed' }
+      });
+      
+      if (completedCount > 0 && completedCount % 10 === 0) {
+        const generateCode = () => 'FREE-SUSHI-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+        await Coupon.create({
+          code: generateCode(),
+          UserId: order.UserId
+        });
+      }
+    }
+    
     res.json(order);
   } catch (err) {
     res.status(400).json({ error: err.message });

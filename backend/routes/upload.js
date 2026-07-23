@@ -22,20 +22,29 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({ storage: storage });
 
+const uploadMiddleware = upload.single('image');
+
 // Admin: Upload image
-router.post('/', verifyToken, isAdmin, upload.single('image'), (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({ message: 'No file uploaded' });
+router.post('/', verifyToken, isAdmin, (req, res) => {
+  uploadMiddleware(req, res, function (err) {
+    if (err) {
+      console.error('Cloudinary/Multer error:', err);
+      return res.status(400).json({ message: 'Error de imagen: ' + (err.message || 'Error desconocido') });
     }
-    
-    // Cloudinary returns the full URL in req.file.path
-    const imageUrl = req.file.path;
-    
-    res.status(201).json({ imageUrl });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+
+    try {
+      if (!req.file) {
+        return res.status(400).json({ message: 'No se subió ningún archivo' });
+      }
+      
+      // Cloudinary returns the full URL in req.file.path
+      const imageUrl = req.file.path;
+      
+      res.status(201).json({ imageUrl });
+    } catch (innerErr) {
+      res.status(500).json({ message: innerErr.message });
+    }
+  });
 });
 
 module.exports = router;

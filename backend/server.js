@@ -21,6 +21,7 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/dishes', require('./routes/dishes'));
 app.use('/api/promotions', require('./routes/promotions'));
 app.use('/api/orders', require('./routes/orders'));
+app.use('/api/coupons', require('./routes/coupons'));
 app.use('/api/upload', require('./routes/upload'));
 
 app.use((err, req, res, next) => {
