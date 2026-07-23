@@ -8,7 +8,8 @@ const router = express.Router();
 router.get('/my-coupons', verifyToken, async (req, res) => {
   try {
     const coupons = await Coupon.findAll({
-      where: { UserId: req.userId, isUsed: false }
+      where: { UserId: req.userId },
+      order: [['createdAt', 'DESC']]
     });
     res.json(coupons);
   } catch (err) {

@@ -22,6 +22,9 @@ router.post('/', verifyToken, async (req, res) => {
     if (couponCode) {
       const coupon = await Coupon.findOne({ where: { code: couponCode, UserId: req.userId, isUsed: false } });
       if (coupon) {
+        if (new Date() > new Date(coupon.expiresAt)) {
+          return res.status(400).json({ error: 'El cupón ha expirado.' });
+        }
         const discountAmount = totalAmount * (coupon.discountPercentage / 100);
         totalAmount -= discountAmount;
         if (totalAmount < 0) totalAmount = 0;
@@ -120,9 +123,11 @@ router.put('/:id/status', verifyToken, isAdmin, async (req, res) => {
       
       if (discountPercentage > 0) {
         const generateCode = () => prefix + Math.random().toString(36).substring(2, 8).toUpperCase();
+        const expiresAt = new Date(Date.now() + 10 * 24 * 60 * 60 * 1000); // 10 days
         await Coupon.create({
           code: generateCode(),
           discountPercentage,
+          expiresAt,
           UserId: order.UserId
         });
       }

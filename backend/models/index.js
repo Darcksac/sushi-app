@@ -33,7 +33,8 @@ const Coupon = sequelize.define('Coupon', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   code: { type: DataTypes.STRING, unique: true, allowNull: false },
   discountPercentage: { type: DataTypes.FLOAT, allowNull: false, defaultValue: 10 },
-  isUsed: { type: DataTypes.BOOLEAN, defaultValue: false }
+  isUsed: { type: DataTypes.BOOLEAN, defaultValue: false },
+  expiresAt: { type: DataTypes.DATE, allowNull: false }
 });
 
 const Order = sequelize.define('Order', {

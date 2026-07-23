@@ -8,6 +8,7 @@ import { DishesComponent } from './pages/admin/dishes/dishes.component';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { RegisterComponent } from './pages/auth/register/register.component';
 import { OrdersComponent } from './pages/client/orders/orders.component';
+import { CouponsComponent } from './pages/client/coupons/coupons.component';
 
 import { authGuard, adminGuard } from './services/auth.guard';
 
@@ -16,6 +17,7 @@ export const routes: Routes = [
   { path: 'menu', component: MenuComponent },
   { path: 'cart', component: CartComponent },
   { path: 'my-orders', component: OrdersComponent, canActivate: [authGuard] },
+  { path: 'my-coupons', component: CouponsComponent, canActivate: [authGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   

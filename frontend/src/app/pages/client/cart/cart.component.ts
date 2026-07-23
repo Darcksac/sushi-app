@@ -157,7 +157,10 @@ export class CartComponent implements OnInit {
   fetchCoupons() {
     const token = this.authService.getToken();
     this.apiService.getMyCoupons(token!).subscribe({
-      next: (res) => this.coupons = res,
+      next: (res) => {
+        // Only show valid, unused coupons in the cart quick list
+        this.coupons = res.filter((c: any) => !c.isUsed && new Date() <= new Date(c.expiresAt));
+      },
       error: (err) => console.error('Error fetching coupons', err)
     });
   }
