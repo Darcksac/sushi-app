@@ -66,7 +66,7 @@ import Swal from 'sweetalert2';
                 <span>$ {{ cartService.total() }}</span>
               </div>
               <div *ngIf="discountAmount > 0" class="flex justify-between text-emerald-400 font-medium">
-                <span>Descuento (Sushi Gratis)</span>
+                <span>Descuento ({{ appliedCoupon?.discountPercentage }}%)</span>
                 <span>- $ {{ discountAmount }}</span>
               </div>
               <div class="flex justify-between text-slate-300">
@@ -86,7 +86,7 @@ import Swal from 'sweetalert2';
               </h4>
               <div class="flex flex-wrap gap-2">
                 <span *ngFor="let c of coupons" (click)="couponCodeInput = c.code" class="bg-red-500/20 text-red-300 px-3 py-1 rounded cursor-pointer hover:bg-red-500/30 transition-colors font-mono text-sm border border-red-500/30">
-                  {{ c.code }}
+                  {{ c.code }} ({{ c.discountPercentage }}%)
                 </span>
               </div>
             </div>
@@ -170,22 +170,13 @@ export class CartComponent implements OnInit {
       return;
     }
     
-    // Calculate max sushi price
-    let maxSushiPrice = 0;
-    for (const item of this.cartService.items()) {
-      if (item.dish.category === 'Sushis' && item.dish.price > maxSushiPrice) {
-        maxSushiPrice = item.dish.price;
-      }
-    }
-    
-    if (maxSushiPrice === 0) {
-      Swal.fire({ icon: 'warning', title: 'Atención', text: 'Necesitas tener al menos un platillo de categoría Sushis en tu carrito para usar este cupón.', confirmButtonColor: '#ef4444' });
-      return;
-    }
+    // Calculate percentage discount
+    const percentage = coupon.discountPercentage || 10;
+    const discount = this.cartService.total() * (percentage / 100);
     
     this.appliedCoupon = coupon;
-    this.discountAmount = maxSushiPrice;
-    Swal.fire({ icon: 'success', title: 'Cupón Aplicado', text: 'Se ha descontado el sushi más caro de tu orden.', confirmButtonColor: '#10b981' });
+    this.discountAmount = discount;
+    Swal.fire({ icon: 'success', title: 'Cupón Aplicado', text: `Se ha aplicado un descuento del ${percentage}% a tu orden.`, confirmButtonColor: '#10b981' });
   }
 
   removeCoupon() {

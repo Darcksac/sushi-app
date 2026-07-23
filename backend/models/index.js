@@ -32,6 +32,7 @@ const Promotion = sequelize.define('Promotion', {
 const Coupon = sequelize.define('Coupon', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   code: { type: DataTypes.STRING, unique: true, allowNull: false },
+  discountPercentage: { type: DataTypes.FLOAT, allowNull: false, defaultValue: 10 },
   isUsed: { type: DataTypes.BOOLEAN, defaultValue: false }
 });
 

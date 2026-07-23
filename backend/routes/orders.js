@@ -22,22 +22,10 @@ router.post('/', verifyToken, async (req, res) => {
     if (couponCode) {
       const coupon = await Coupon.findOne({ where: { code: couponCode, UserId: req.userId, isUsed: false } });
       if (coupon) {
-        // Find most expensive sushi in the cart
-        let maxSushiPrice = 0;
-        for (const item of items) {
-          const dish = await Dish.findByPk(item.dishId);
-          if (dish && dish.category === 'Sushis' && dish.price > maxSushiPrice) {
-            maxSushiPrice = dish.price;
-          }
-        }
-        
-        if (maxSushiPrice > 0) {
-          totalAmount -= maxSushiPrice;
-          if (totalAmount < 0) totalAmount = 0;
-          await coupon.update({ isUsed: true });
-        } else {
-          return res.status(400).json({ error: 'El cupón requiere al menos un platillo de categoría Sushis en el carrito.' });
-        }
+        const discountAmount = totalAmount * (coupon.discountPercentage / 100);
+        totalAmount -= discountAmount;
+        if (totalAmount < 0) totalAmount = 0;
+        await coupon.update({ isUsed: true });
       } else {
         return res.status(400).json({ error: 'Cupón inválido o ya ha sido usado.' });
       }
@@ -113,10 +101,23 @@ router.put('/:id/status', verifyToken, isAdmin, async (req, res) => {
         where: { UserId: order.UserId, status: 'completed' }
       });
       
-      if (completedCount > 0 && completedCount % 10 === 0) {
-        const generateCode = () => 'FREE-SUSHI-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+      let discountPercentage = 0;
+      let prefix = '';
+      if (completedCount > 0) {
+        if (completedCount % 5 === 0) {
+          discountPercentage = 20;
+          prefix = '20OFF-';
+        } else if (completedCount % 3 === 0) {
+          discountPercentage = 10;
+          prefix = '10OFF-';
+        }
+      }
+      
+      if (discountPercentage > 0) {
+        const generateCode = () => prefix + Math.random().toString(36).substring(2, 8).toUpperCase();
         await Coupon.create({
           code: generateCode(),
+          discountPercentage,
           UserId: order.UserId
         });
       }
