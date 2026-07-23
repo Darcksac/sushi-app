@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ApiService } from '../../../../services/api.service';
-import { AuthService } from '../../../../services/auth.service';
+import { ApiService } from '../../../services/api.service';
+import { AuthService } from '../../../services/auth.service';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -97,11 +97,11 @@ export class CouponsComponent implements OnInit {
       return;
     }
     this.apiService.getMyCoupons(token).subscribe({
-      next: (res) => {
+      next: (res: any) => {
         this.coupons = res;
         this.loading = false;
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Error fetching coupons', err);
         this.loading = false;
       }
