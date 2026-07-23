@@ -104,10 +104,15 @@ router.put('/:id/status', verifyToken, isAdmin, async (req, res) => {
       let discountPercentage = 0;
       let prefix = '';
       if (completedCount > 0) {
-        if (completedCount % 5 === 0) {
+        const cyclePosition = completedCount % 10;
+        
+        if (cyclePosition === 0) {
+          discountPercentage = 40;
+          prefix = '40OFF-';
+        } else if (cyclePosition === 5) {
           discountPercentage = 20;
           prefix = '20OFF-';
-        } else if (completedCount % 3 === 0) {
+        } else if (cyclePosition === 3) {
           discountPercentage = 10;
           prefix = '10OFF-';
         }
