@@ -34,7 +34,7 @@ const Coupon = sequelize.define('Coupon', {
   code: { type: DataTypes.STRING, unique: true, allowNull: false },
   discountPercentage: { type: DataTypes.FLOAT, allowNull: false, defaultValue: 10 },
   isUsed: { type: DataTypes.BOOLEAN, defaultValue: false },
-  expiresAt: { type: DataTypes.DATE, allowNull: false }
+  expiresAt: { type: DataTypes.DATE, allowNull: true }
 });
 
 const Order = sequelize.define('Order', {
