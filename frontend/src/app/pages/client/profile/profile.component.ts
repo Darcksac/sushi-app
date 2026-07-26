@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
 import { AuthService } from '../../../services/auth.service';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2';
 
@@ -28,6 +28,15 @@ import Swal from 'sweetalert2';
 
         <div *ngIf="loading" class="text-center py-8">
           <p class="text-slate-500 font-medium">Cargando...</p>
+        </div>
+        
+        <div *ngIf="!loading && !user" class="text-center py-8 bg-red-50 rounded-2xl border border-red-100">
+          <svg class="w-12 h-12 text-red-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <p class="text-slate-700 font-medium mb-1">No pudimos cargar tus datos.</p>
+          <p class="text-sm text-slate-500">Es posible que el servidor aún se esté actualizando. Intenta de nuevo en unos minutos.</p>
+          <button (click)="fetchProfile()" class="mt-4 bg-white border border-slate-200 text-slate-700 font-bold py-2 px-4 rounded-xl hover:bg-slate-50 transition-colors shadow-sm">
+            Reintentar
+          </button>
         </div>
 
         <form *ngIf="!loading && user" (ngSubmit)="saveProfile()" class="space-y-6">
@@ -63,6 +72,7 @@ export class ProfileComponent implements OnInit {
   authService = inject(AuthService);
   http = inject(HttpClient);
   apiService = inject(ApiService);
+  router = inject(Router);
   
   user: any = null;
   loading = true;
@@ -75,6 +85,8 @@ export class ProfileComponent implements OnInit {
   }
 
   fetchProfile() {
+    this.loading = true;
+    this.user = null;
     const token = this.authService.getToken();
     if (!token) return;
     
@@ -88,6 +100,10 @@ export class ProfileComponent implements OnInit {
       error: (err: any) => {
         console.error(err);
         this.loading = false;
+        if (err.status === 401 || err.status === 403) {
+          this.authService.logout();
+          this.router.navigate(['/login']);
+        }
       }
     });
   }
