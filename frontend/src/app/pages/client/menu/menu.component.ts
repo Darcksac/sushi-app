@@ -159,8 +159,6 @@ import { RouterModule } from '@angular/router';
         </div>
       </div>
     </div>
-
-    </div>
   `,
   styles: [`
     .custom-scrollbar::-webkit-scrollbar {
