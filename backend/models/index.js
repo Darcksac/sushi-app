@@ -17,7 +17,14 @@ const Dish = sequelize.define('Dish', {
   price: { type: DataTypes.FLOAT, allowNull: false },
   imageUrl: { type: DataTypes.STRING },
   category: { type: DataTypes.STRING, defaultValue: 'Sushis' },
-  isAvailable: { type: DataTypes.BOOLEAN, defaultValue: true }
+  isAvailable: { type: DataTypes.BOOLEAN, defaultValue: true },
+  customizations: { type: DataTypes.JSON, defaultValue: [] }
+});
+
+const Review = sequelize.define('Review', {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  rating: { type: DataTypes.INTEGER, allowNull: false, validate: { min: 1, max: 5 } },
+  comment: { type: DataTypes.TEXT }
 });
 
 const Promotion = sequelize.define('Promotion', {
@@ -49,7 +56,9 @@ const Order = sequelize.define('Order', {
 const OrderItem = sequelize.define('OrderItem', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   quantity: { type: DataTypes.INTEGER, allowNull: false },
-  unitPrice: { type: DataTypes.FLOAT, allowNull: false }
+  unitPrice: { type: DataTypes.FLOAT, allowNull: false },
+  notes: { type: DataTypes.TEXT },
+  selectedCustomizations: { type: DataTypes.JSON, defaultValue: [] }
 });
 
 // Relationships
@@ -59,10 +68,16 @@ Order.belongsTo(User);
 User.hasMany(Coupon);
 Coupon.belongsTo(User);
 
+User.hasMany(Review);
+Review.belongsTo(User);
+
+Dish.hasMany(Review);
+Review.belongsTo(Dish);
+
 Order.hasMany(OrderItem);
 OrderItem.belongsTo(Order);
 
 Dish.hasMany(OrderItem);
 OrderItem.belongsTo(Dish);
 
-module.exports = { User, Dish, Promotion, Order, OrderItem, Coupon, sequelize };
+module.exports = { User, Dish, Review, Promotion, Order, OrderItem, Coupon, sequelize };

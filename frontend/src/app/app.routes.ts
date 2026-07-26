@@ -4,6 +4,7 @@ import { MenuComponent } from './pages/client/menu/menu.component';
 import { CartComponent } from './pages/client/cart/cart.component';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
 import { DishesComponent } from './pages/admin/dishes/dishes.component';
+import { ProfileComponent } from './pages/client/profile/profile.component';
 
 import { LoginComponent } from './pages/auth/login/login.component';
 import { RegisterComponent } from './pages/auth/register/register.component';
@@ -18,6 +19,7 @@ export const routes: Routes = [
   { path: 'cart', component: CartComponent },
   { path: 'my-orders', component: OrdersComponent, canActivate: [authGuard] },
   { path: 'my-coupons', component: CouponsComponent, canActivate: [authGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   

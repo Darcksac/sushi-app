@@ -76,9 +76,16 @@
                 </a>
               </td>
               <td class="px-6 py-4">
-                <ul class="text-sm text-slate-600 list-disc list-inside">
-                  <li *ngFor="let item of order.OrderItems">
-                    {{ item.quantity }}x {{ item.Dish?.name }}
+                <ul class="text-sm text-slate-600 space-y-2">
+                  <li *ngFor="let item of order.OrderItems" class="bg-slate-50 p-2 rounded-lg border border-slate-100">
+                    <div class="font-bold text-slate-900">{{ item.quantity }}x {{ item.Dish?.name }}</div>
+                    <div *ngIf="item.selectedCustomizations?.length" class="text-xs text-slate-500 mt-1 pl-2 border-l-2 border-emerald-200">
+                      <span class="font-semibold">Extras:</span> 
+                      <span *ngFor="let c of item.selectedCustomizations; let last = last">{{ c.name }}{{ !last ? ', ' : '' }}</span>
+                    </div>
+                    <div *ngIf="item.notes" class="text-xs text-amber-600 mt-1 pl-2 border-l-2 border-amber-200 italic">
+                      "{{ item.notes }}"
+                    </div>
                   </li>
                 </ul>
               </td>

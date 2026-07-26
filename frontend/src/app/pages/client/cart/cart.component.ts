@@ -44,14 +44,28 @@ import Swal from 'sweetalert2';
               <div class="flex-1">
                 <h4 class="text-xl font-bold text-slate-900">{{ item.dish.name }}</h4>
                 <div class="text-slate-500 font-medium">$ {{ item.dish.price }}</div>
+                
+                <div *ngIf="item.selectedCustomizations?.length || item.notes" class="mt-2 text-sm text-slate-600 bg-slate-50 p-3 rounded-xl">
+                  <div *ngIf="item.selectedCustomizations?.length" class="mb-1">
+                    <span class="font-bold">Extras:</span>
+                    <ul class="list-disc pl-4 mt-1">
+                      <li *ngFor="let c of item.selectedCustomizations">
+                        {{ c.name }} <span *ngIf="c.price > 0" class="text-emerald-500 font-medium">(+$ {{ c.price }})</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div *ngIf="item.notes" class="mt-1">
+                    <span class="font-bold">Notas:</span> {{ item.notes }}
+                  </div>
+                </div>
               </div>
               <div class="flex items-center gap-4">
                 <div class="flex items-center gap-2 bg-slate-50 p-1 rounded-lg border border-slate-200">
-                  <button (click)="updateQuantity(item.dish.id, item.quantity - 1)" class="w-8 h-8 flex items-center justify-center text-slate-500 hover:bg-white hover:text-slate-900 rounded-md transition-colors">-</button>
+                  <button (click)="updateQuantity(item.cartItemId, item.quantity - 1)" class="w-8 h-8 flex items-center justify-center text-slate-500 hover:bg-white hover:text-slate-900 rounded-md transition-colors">-</button>
                   <span class="w-8 text-center font-bold">{{ item.quantity }}</span>
-                  <button (click)="updateQuantity(item.dish.id, item.quantity + 1)" class="w-8 h-8 flex items-center justify-center text-slate-500 hover:bg-white hover:text-slate-900 rounded-md transition-colors">+</button>
+                  <button (click)="updateQuantity(item.cartItemId, item.quantity + 1)" class="w-8 h-8 flex items-center justify-center text-slate-500 hover:bg-white hover:text-slate-900 rounded-md transition-colors">+</button>
                 </div>
-                <button (click)="removeItem(item.dish.id)" class="text-red-300 hover:text-red-500 transition-colors p-2">
+                <button (click)="removeItem(item.cartItemId)" class="text-red-300 hover:text-red-500 transition-colors p-2">
                   <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                 </button>
               </div>
@@ -193,12 +207,12 @@ export class CartComponent implements OnInit {
     return total < 0 ? 0 : total;
   }
 
-  updateQuantity(dishId: number, quantity: number) {
-    this.cartService.updateQuantity(dishId, quantity);
+  updateQuantity(cartItemId: string, quantity: number) {
+    this.cartService.updateQuantity(cartItemId, quantity);
   }
 
-  removeItem(dishId: number) {
-    this.cartService.removeFromCart(dishId);
+  removeItem(cartItemId: string) {
+    this.cartService.removeFromCart(cartItemId);
   }
 
   getLocation() {
@@ -241,7 +255,12 @@ export class CartComponent implements OnInit {
 
     this.loading = true;
     const token = this.authService.getToken();
-    const items = this.cartService.items().map(i => ({ dishId: i.dish.id, quantity: i.quantity }));
+    const items = this.cartService.items().map(i => ({ 
+      dishId: i.dish.id, 
+      quantity: i.quantity,
+      notes: i.notes,
+      selectedCustomizations: i.selectedCustomizations
+    }));
     
     // Create requestedDeliveryTime Date object for today at the requested time
     let requestedDeliveryTime = null;

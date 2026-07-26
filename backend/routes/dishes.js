@@ -1,5 +1,5 @@
 const express = require('express');
-const { Dish } = require('../models');
+const { Dish, Review, User } = require('../models');
 const { verifyToken, isAdmin } = require('../middleware/authMiddleware');
 
 const router = express.Router();
@@ -7,7 +7,10 @@ const router = express.Router();
 // Get all available dishes (Public)
 router.get('/', async (req, res) => {
   try {
-    const dishes = await Dish.findAll({ where: { isAvailable: true } });
+    const dishes = await Dish.findAll({ 
+      where: { isAvailable: true },
+      include: [{ model: Review, include: [{ model: User, attributes: ['id', 'email'] }] }]
+    });
     res.json(dishes);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -55,6 +58,26 @@ router.delete('/:id', verifyToken, isAdmin, async (req, res) => {
     res.json({ message: 'Dish deleted' });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+// Client: Post a review
+router.post('/:id/reviews', verifyToken, async (req, res) => {
+  try {
+    const { rating, comment } = req.body;
+    const dish = await Dish.findByPk(req.params.id);
+    if (!dish) return res.status(404).json({ message: 'Dish not found' });
+
+    const review = await Review.create({
+      rating,
+      comment,
+      DishId: dish.id,
+      UserId: req.userId
+    });
+
+    res.status(201).json(review);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 });
 

@@ -30,7 +30,8 @@ export class DishesComponent implements OnInit {
     price: 0,
     imageUrl: '',
     category: 'Sushis',
-    isAvailable: true
+    isAvailable: true,
+    customizations: []
   };
 
   ngOnInit() {
@@ -87,19 +88,31 @@ export class DishesComponent implements OnInit {
       price: 0,
       imageUrl: '',
       category: 'Sushis',
-      isAvailable: true
+      isAvailable: true,
+      customizations: []
     };
     this.showModal = true;
   }
 
   openEditModal(dish: any) {
     this.isEditing = true;
-    this.currentDish = { ...dish };
+    this.currentDish = { ...dish, customizations: dish.customizations ? JSON.parse(JSON.stringify(dish.customizations)) : [] };
     this.showModal = true;
   }
 
   closeModal() {
     this.showModal = false;
+  }
+
+  addCustomization() {
+    if (!this.currentDish.customizations) {
+      this.currentDish.customizations = [];
+    }
+    this.currentDish.customizations.push({ name: '', price: 0 });
+  }
+
+  removeCustomization(index: number) {
+    this.currentDish.customizations.splice(index, 1);
   }
 
   saveDish() {

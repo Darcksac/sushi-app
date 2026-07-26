@@ -2,12 +2,13 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { CartService } from '../../../services/cart.service';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   template: `
     <div class="min-h-screen bg-slate-50 pb-24">
       <!-- Header Area -->
@@ -77,7 +78,7 @@ import { RouterModule } from '@angular/router';
                   <h4 class="text-2xl font-bold mb-2 text-slate-900 line-clamp-1">{{dish.name}}</h4>
                   <p class="text-slate-500 mb-6 flex-1 line-clamp-2 text-sm leading-relaxed">{{dish.description}}</p>
                   
-                  <button (click)="addToCart(dish)" class="w-full flex items-center justify-center gap-2 bg-slate-50 hover:bg-red-500 text-slate-700 hover:text-white font-bold py-3.5 px-4 rounded-2xl transition-all duration-300 mt-auto group/btn">
+                  <button (click)="openCustomizer(dish)" class="w-full flex items-center justify-center gap-2 bg-slate-50 hover:bg-red-500 text-slate-700 hover:text-white font-bold py-3.5 px-4 rounded-2xl transition-all duration-300 mt-auto group/btn">
                     <svg class="w-5 h-5 transition-transform group-hover/btn:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                     Agregar
                   </button>
@@ -100,7 +101,64 @@ import { RouterModule } from '@angular/router';
           </div>
           <span>Ver Orden ($ {{ cartService.total() }})</span>
         </a>
+        </div>
+
+      <!-- Customization Modal -->
+      <div *ngIf="selectedDish" class="fixed inset-0 z-[100] flex items-center justify-center px-4">
+        <!-- Backdrop -->
+        <div class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity" (click)="closeCustomizer()"></div>
+        
+        <!-- Modal Panel -->
+        <div class="bg-white rounded-[2rem] w-full max-w-md shadow-2xl relative z-10 overflow-hidden flex flex-col max-h-[90vh]">
+          
+          <div class="relative h-48 bg-slate-100 shrink-0">
+            <img *ngIf="selectedDish.imageUrl" [src]="selectedDish.imageUrl" class="w-full h-full object-cover" />
+            <button (click)="closeCustomizer()" class="absolute top-4 right-4 bg-white/80 hover:bg-white text-slate-900 p-2 rounded-full backdrop-blur-sm transition-colors">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+          </div>
+          
+          <div class="p-6 overflow-y-auto custom-scrollbar flex-1">
+            <h3 class="text-2xl font-bold text-slate-900 mb-1">{{ selectedDish.name }}</h3>
+            <p class="text-slate-500 mb-6">{{ selectedDish.description }}</p>
+            
+            <!-- Customizations -->
+            <div *ngIf="selectedDish.customizations?.length > 0" class="mb-6">
+              <h4 class="font-bold text-slate-900 mb-3 flex items-center gap-2">
+                <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                Personalizar
+              </h4>
+              <div class="space-y-3">
+                <label *ngFor="let custom of selectedDish.customizations; let i = index" class="flex items-center justify-between p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition-colors" [class.bg-emerald-50]="selectedCustomizations[i]" [class.border-emerald-200]="selectedCustomizations[i]">
+                  <div class="flex items-center gap-3">
+                    <input type="checkbox" [(ngModel)]="selectedCustomizations[i]" class="w-5 h-5 rounded text-emerald-500 focus:ring-emerald-500 border-slate-300" />
+                    <span class="font-medium text-slate-700">{{ custom.name }}</span>
+                  </div>
+                  <span *ngIf="custom.price > 0" class="text-emerald-600 font-bold">+$ {{ custom.price }}</span>
+                </label>
+              </div>
+            </div>
+            
+            <!-- Notes -->
+            <div>
+              <h4 class="font-bold text-slate-900 mb-2 flex items-center gap-2">
+                <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                Notas especiales
+              </h4>
+              <textarea [(ngModel)]="notes" placeholder="Ej. Sin pepino, soya extra, etc." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 focus:ring-2 focus:ring-red-500 focus:border-red-500 resize-none h-20"></textarea>
+            </div>
+          </div>
+          
+          <div class="p-6 border-t border-slate-100 bg-slate-50 shrink-0">
+            <button (click)="confirmAddToCart()" class="w-full flex items-center justify-between bg-red-500 hover:bg-red-600 text-white font-bold py-4 px-6 rounded-xl transition-all shadow-sm">
+              <span>Agregar a Orden</span>
+              <span>$ {{ getSelectedDishTotal() }}</span>
+            </button>
+          </div>
+          
+        </div>
       </div>
+    </div>
 
     </div>
   `,
@@ -164,7 +222,46 @@ export class MenuComponent implements OnInit {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  addToCart(dish: any) {
-    this.cartService.addToCart(dish);
+  selectedDish: any = null;
+  selectedCustomizations: boolean[] = [];
+  notes: string = '';
+
+  openCustomizer(dish: any) {
+    this.selectedDish = dish;
+    this.selectedCustomizations = dish.customizations ? new Array(dish.customizations.length).fill(false) : [];
+    this.notes = '';
+  }
+
+  closeCustomizer() {
+    this.selectedDish = null;
+  }
+
+  getSelectedDishTotal(): number {
+    if (!this.selectedDish) return 0;
+    let total = this.selectedDish.price;
+    if (this.selectedDish.customizations) {
+      this.selectedCustomizations.forEach((isSelected, index) => {
+        if (isSelected) {
+          total += (this.selectedDish.customizations[index].price || 0);
+        }
+      });
+    }
+    return total;
+  }
+
+  confirmAddToCart() {
+    if (!this.selectedDish) return;
+    
+    const customizationsToSave: any[] = [];
+    if (this.selectedDish.customizations) {
+      this.selectedCustomizations.forEach((isSelected, index) => {
+        if (isSelected) {
+          customizationsToSave.push(this.selectedDish.customizations[index]);
+        }
+      });
+    }
+    
+    this.cartService.addToCart(this.selectedDish, 1, this.notes, customizationsToSave);
+    this.closeCustomizer();
   }
 }

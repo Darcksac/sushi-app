@@ -14,7 +14,13 @@ router.post('/', verifyToken, async (req, res) => {
     for (const item of items) {
       const dish = await Dish.findByPk(item.dishId);
       if (dish) {
-        totalAmount += dish.price * item.quantity;
+        let itemTotal = dish.price;
+        if (item.selectedCustomizations && Array.isArray(item.selectedCustomizations)) {
+          for (const custom of item.selectedCustomizations) {
+            itemTotal += (custom.price || 0);
+          }
+        }
+        totalAmount += itemTotal * item.quantity;
       }
     }
 
@@ -49,7 +55,9 @@ router.post('/', verifyToken, async (req, res) => {
           OrderId: order.id,
           DishId: item.dishId,
           quantity: item.quantity,
-          unitPrice: dish.price
+          unitPrice: dish.price,
+          notes: item.notes || '',
+          selectedCustomizations: item.selectedCustomizations || []
         });
       }
     }

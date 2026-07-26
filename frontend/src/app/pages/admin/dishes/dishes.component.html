@@ -130,7 +130,36 @@
           </div>
         </div>
         
-        <div class="pt-2 flex items-center gap-3">
+        <div class="pt-4 border-t border-slate-100">
+          <div class="flex justify-between items-center mb-3">
+            <label class="block text-sm font-semibold text-slate-700">Opciones de Personalización</label>
+            <button (click)="addCustomization()" type="button" class="text-xs bg-emerald-50 text-emerald-600 font-bold px-3 py-1.5 rounded-lg hover:bg-emerald-100 transition-colors flex items-center gap-1">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+              Añadir Opción
+            </button>
+          </div>
+          
+          <div *ngIf="!currentDish.customizations || currentDish.customizations.length === 0" class="text-center py-4 bg-slate-50 border border-dashed border-slate-200 rounded-xl">
+            <p class="text-slate-500 text-sm">No hay opciones de personalización.</p>
+          </div>
+          
+          <div class="space-y-3" *ngIf="currentDish.customizations && currentDish.customizations.length > 0">
+            <div *ngFor="let custom of currentDish.customizations; let i = index" class="flex items-center gap-3 bg-white p-3 border border-slate-200 rounded-xl">
+              <div class="flex-1">
+                <input type="text" [(ngModel)]="custom.name" placeholder="Nombre (ej. Extra Queso)" class="w-full bg-slate-50 border-none rounded-lg py-2 px-3 text-sm focus:ring-2 focus:ring-red-500" />
+              </div>
+              <div class="w-24 relative">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">$</span>
+                <input type="number" [(ngModel)]="custom.price" placeholder="0.00" class="w-full bg-slate-50 border-none rounded-lg py-2 pl-7 pr-3 text-sm focus:ring-2 focus:ring-red-500" />
+              </div>
+              <button (click)="removeCustomization(i)" type="button" class="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-slate-100 flex items-center gap-3">
           <input type="checkbox" id="isAvailable" [(ngModel)]="currentDish.isAvailable" class="w-5 h-5 text-red-500 rounded focus:ring-red-500 border-gray-300" />
           <label for="isAvailable" class="text-slate-700 font-medium cursor-pointer select-none">Platillo disponible al público</label>
         </div>

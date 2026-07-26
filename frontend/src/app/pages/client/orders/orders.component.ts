@@ -48,13 +48,36 @@ import { Router, RouterModule } from '@angular/router';
               </div>
               <p class="text-sm text-slate-500 mb-4">Realizada el: {{ order.createdAt | date:'short' }}</p>
               
-              <div class="space-y-2">
-                <div *ngFor="let item of order.OrderItems" class="flex justify-between items-center bg-slate-50 p-3 rounded-xl border border-slate-100">
-                  <div class="flex items-center gap-3">
-                    <span class="font-bold text-slate-900">{{ item.quantity }}x</span>
-                    <span class="text-slate-700 font-medium">{{ item.Dish?.name }}</span>
+              <div class="space-y-2 mb-6">
+                <div *ngFor="let item of order.OrderItems" class="flex justify-between items-start bg-slate-50 p-3 rounded-xl border border-slate-100">
+                  <div class="flex-1">
+                    <div class="flex items-center gap-3">
+                      <span class="font-bold text-slate-900">{{ item.quantity }}x</span>
+                      <span class="text-slate-700 font-medium">{{ item.Dish?.name }}</span>
+                    </div>
+                    <div *ngIf="item.selectedCustomizations?.length" class="text-xs text-slate-500 mt-1 pl-7">
+                      Extras: <span *ngFor="let c of item.selectedCustomizations; let last = last">{{ c.name }}{{ !last ? ', ' : '' }}</span>
+                    </div>
+                    <div *ngIf="item.notes" class="text-xs text-slate-500 mt-1 pl-7 italic">
+                      "{{ item.notes }}"
+                    </div>
                   </div>
-                  <span class="text-slate-500 font-bold">$ {{ item.unitPrice }}</span>
+                  <span class="text-slate-500 font-bold ml-4">$ {{ item.unitPrice }}</span>
+                </div>
+              </div>
+              
+              <!-- Progress Bar -->
+              <div class="mt-4">
+                <div class="flex justify-between text-xs font-bold text-slate-400 mb-2 px-1">
+                  <span [class.text-red-500]="getProgressStep(order.status) >= 1">Pendiente</span>
+                  <span [class.text-red-500]="getProgressStep(order.status) >= 2">Preparando</span>
+                  <span [class.text-red-500]="getProgressStep(order.status) >= 3">En Camino</span>
+                  <span [class.text-emerald-500]="getProgressStep(order.status) >= 4">Entregado</span>
+                </div>
+                <div class="h-2 bg-slate-100 rounded-full overflow-hidden">
+                  <div class="h-full bg-red-500 transition-all duration-1000 ease-out" 
+                       [class.bg-emerald-500]="order.status === 'completed'"
+                       [style.width.%]="getProgressPercentage(order.status)"></div>
                 </div>
               </div>
             </div>
@@ -123,5 +146,24 @@ export class OrdersComponent implements OnInit {
       case 'completed': return 'Completado';
       default: return status;
     }
+  }
+
+  getProgressStep(status: string): number {
+    switch (status) {
+      case 'pending': return 1;
+      case 'preparing': return 2;
+      case 'delivering': return 3;
+      case 'completed': return 4;
+      default: return 0;
+    }
+  }
+
+  getProgressPercentage(status: string): number {
+    const step = this.getProgressStep(status);
+    if (step === 1) return 15;
+    if (step === 2) return 50;
+    if (step === 3) return 85;
+    if (step === 4) return 100;
+    return 0;
   }
 }
