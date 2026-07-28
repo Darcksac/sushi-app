@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ApiService } from '../../../services/api.service';
 import { AuthService } from '../../../services/auth.service';
 import { Router, RouterModule } from '@angular/router';
+import { CartService } from '../../../services/cart.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-orders',
@@ -67,7 +69,7 @@ import { Router, RouterModule } from '@angular/router';
               </div>
               
               <!-- Progress Bar -->
-              <div class="mt-4">
+              <div class="mt-4 mb-4">
                 <div class="flex justify-between text-xs font-bold text-slate-400 mb-2 px-1">
                   <span [class.text-red-500]="getProgressStep(order.status) >= 1">Pendiente</span>
                   <span [class.text-red-500]="getProgressStep(order.status) >= 2">Preparando</span>
@@ -79,6 +81,14 @@ import { Router, RouterModule } from '@angular/router';
                        [class.bg-emerald-500]="order.status === 'completed'"
                        [style.width.%]="getProgressPercentage(order.status)"></div>
                 </div>
+              </div>
+
+              <!-- Reorder Button -->
+              <div class="pt-4 border-t border-slate-100">
+                <button (click)="reorder(order)" class="w-full flex items-center justify-center gap-2 bg-red-50 hover:bg-red-100 text-red-600 font-bold py-3 px-4 rounded-xl transition-colors">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                  Volver a Pedir
+                </button>
               </div>
             </div>
 
@@ -102,6 +112,7 @@ export class OrdersComponent implements OnInit {
   apiService = inject(ApiService);
   authService = inject(AuthService);
   router = inject(Router);
+  cartService = inject(CartService);
 
   orders: any[] = [];
   loading = true;
@@ -165,5 +176,54 @@ export class OrdersComponent implements OnInit {
     if (step === 3) return 85;
     if (step === 4) return 100;
     return 0;
+  }
+
+  reorder(order: any) {
+    if (!order.OrderItems || order.OrderItems.length === 0) return;
+
+    const currentItems = this.cartService.items();
+    if (currentItems.length > 0) {
+      Swal.fire({
+        title: '¿Vaciar carrito actual?',
+        text: 'Tienes productos en tu carrito. Para reordenar este pedido necesitamos vaciarlo primero.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#94a3b8',
+        confirmButtonText: 'Sí, vaciar y reordenar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.executeReorder(order);
+        }
+      });
+    } else {
+      this.executeReorder(order);
+    }
+  }
+
+  private executeReorder(order: any) {
+    this.cartService.clearCart();
+    
+    for (const item of order.OrderItems) {
+      if (item.Dish) {
+        this.cartService.addToCart(
+          item.Dish, 
+          item.quantity, 
+          item.notes || '', 
+          item.selectedCustomizations || []
+        );
+      }
+    }
+
+    Swal.fire({
+      icon: 'success',
+      title: '¡Añadido al Carrito!',
+      text: 'Tu pedido anterior ha sido añadido. Redirigiendo...',
+      timer: 1500,
+      showConfirmButton: false
+    }).then(() => {
+      this.router.navigate(['/cart']);
+    });
   }
 }
