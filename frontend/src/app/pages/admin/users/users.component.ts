@@ -1,8 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
-import { ApiService } from '../../../../services/api.service';
-import { AuthService } from '../../../../services/auth.service';
+import { ApiService } from '../../../services/api.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-admin-users',
@@ -140,11 +140,11 @@ export class AdminUsersComponent implements OnInit {
 
     this.loading = true;
     this.apiService.getAdminUsers(token).subscribe({
-      next: (data) => {
+      next: (data: any) => {
         this.users = data;
         this.loading = false;
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Error fetching users', err);
         this.loading = false;
         if (err.status === 401 || err.status === 403) {
