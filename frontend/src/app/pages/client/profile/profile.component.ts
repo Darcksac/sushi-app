@@ -130,10 +130,11 @@ export class ProfileComponent implements OnInit {
       },
       error: (err: any) => {
         this.saving = false;
+        const errMsg = err.error?.message || err.message || 'Error desconocido';
         Swal.fire({
           icon: 'error',
-          title: 'Error',
-          text: err.error?.message || 'No se pudo actualizar el perfil.',
+          title: 'Error ' + (err.status || ''),
+          text: 'No se pudo actualizar el perfil. Detalle: ' + errMsg,
           confirmButtonColor: '#ef4444'
         });
       }
