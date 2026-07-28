@@ -4,6 +4,7 @@ import { MenuComponent } from './pages/client/menu/menu.component';
 import { CartComponent } from './pages/client/cart/cart.component';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
 import { DishesComponent } from './pages/admin/dishes/dishes.component';
+import { AdminUsersComponent } from './pages/admin/users/users.component';
 import { ProfileComponent } from './pages/client/profile/profile.component';
 
 import { LoginComponent } from './pages/auth/login/login.component';
@@ -25,6 +26,7 @@ export const routes: Routes = [
   
   { path: 'admin', component: DashboardComponent, canActivate: [adminGuard] },
   { path: 'admin/dishes', component: DishesComponent, canActivate: [adminGuard] },
+  { path: 'admin/users', component: AdminUsersComponent, canActivate: [adminGuard] },
   
   { path: '**', redirectTo: '' }
 ];

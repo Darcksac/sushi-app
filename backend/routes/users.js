@@ -1,8 +1,21 @@
 const express = require('express');
 const { User } = require('../models');
-const { verifyToken } = require('../middleware/authMiddleware');
+const { verifyToken, isAdmin } = require('../middleware/authMiddleware');
 
 const router = express.Router();
+
+// Get all users (Admin only)
+router.get('/all', verifyToken, isAdmin, async (req, res) => {
+  try {
+    const users = await User.findAll({
+      attributes: ['id', 'email', 'phone', 'address', 'role', 'createdAt'],
+      order: [['createdAt', 'DESC']]
+    });
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 // Get user profile
 router.get('/profile', verifyToken, async (req, res) => {

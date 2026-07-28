@@ -61,6 +61,13 @@ export class ApiService {
     });
   }
 
+  // Admin User Management
+  getAdminUsers(token: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/users/all`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  }
+
   createDish(dishData: any, token: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/dishes`, dishData, {
       headers: { Authorization: `Bearer ${token}` }
