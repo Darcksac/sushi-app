@@ -13,7 +13,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Basic Route
 app.get('/', (req, res) => {
-  res.send('SushiPekiteki Backend Running');
+  res.send('King Dogos GDL Backend Running');
 });
 
 // Import Routes
@@ -32,11 +32,14 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 3000;
 
-sequelize.sync({ alter: true }).then(() => {
+const syncOptions = sequelize.getDialect() === 'sqlite' ? {} : { alter: true };
+
+sequelize.sync(syncOptions).then(() => {
   console.log('Database connected and synced');
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
 }).catch(err => {
   console.error('Failed to sync database: ', err);
+  process.exit(1);
 });

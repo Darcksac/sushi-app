@@ -1,24 +1,26 @@
-<div class="bg-slate-900 text-white min-h-screen">
+<div class="bg-[#0b0b0d] text-white min-h-screen">
   <nav class="p-6 max-w-7xl mx-auto relative z-50">
     <div class="flex items-center justify-between">
-      <a routerLink="/" class="text-2xl font-black tracking-tighter text-red-500 hover:opacity-80 transition-opacity">
-        SUSHI<span class="text-white">PEKITEKI</span>
+      <a routerLink="/" class="text-2xl font-black tracking-tighter text-amber-400 hover:opacity-90 transition-opacity flex items-center gap-3">
+        <img src="assets/logo.png" alt="King Dogos GDL" class="h-12 w-12 object-contain rounded-full border border-amber-400/50 shadow-[0_0_12px_rgba(245,158,11,0.4)] bg-black" />
+        <span class="tracking-tight font-black">KING<span class="text-white">DOGOS</span> <span class="text-amber-400">GDL</span></span>
       </a>
       
       <!-- Desktop Menu -->
-      <div class="hidden md:flex gap-8 font-medium">
-        <a routerLink="/" class="hover:text-red-500 transition-colors">Inicio</a>
-        <a routerLink="/menu" class="hover:text-red-500 transition-colors">Menú</a>
-        <a *ngIf="authService.isLoggedIn()" routerLink="/my-orders" class="hover:text-red-500 transition-colors">Mis Órdenes</a>
-        <a *ngIf="authService.isLoggedIn()" routerLink="/my-coupons" class="hover:text-red-500 transition-colors">Mis Cupones</a>
-        <a *ngIf="authService.isLoggedIn()" routerLink="/profile" class="hover:text-red-500 transition-colors">Mi Perfil</a>
+      <div class="hidden md:flex gap-8 font-semibold">
+        <a routerLink="/" class="text-amber-400 transition-colors">Inicio</a>
+        <a routerLink="/menu" class="hover:text-amber-400 transition-colors">Menú</a>
+        <a *ngIf="authService.isLoggedIn()" routerLink="/my-orders" class="hover:text-amber-400 transition-colors">Mis Órdenes</a>
+        <a *ngIf="authService.isLoggedIn()" routerLink="/my-coupons" class="hover:text-amber-400 transition-colors">Mis Cupones</a>
+        <a *ngIf="authService.isLoggedIn()" routerLink="/profile" class="hover:text-amber-400 transition-colors">Mi Perfil</a>
       </div>
       
       <div class="hidden md:flex items-center gap-4">
-        <a routerLink="/cart" class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-full font-semibold transition-all shadow-[0_0_15px_rgba(239,68,68,0.5)]">
+        <a routerLink="/cart" class="bg-amber-400 hover:bg-amber-300 text-black px-6 py-2.5 rounded-full font-black transition-all shadow-[0_0_20px_rgba(245,158,11,0.45)] hover:scale-105 flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
           Carrito
         </a>
-        <a *ngIf="!authService.isLoggedIn()" routerLink="/login" class="text-white hover:text-red-500 font-semibold transition-colors">
+        <a *ngIf="!authService.isLoggedIn()" routerLink="/login" class="text-white hover:text-amber-400 font-bold transition-colors">
           Iniciar Sesión
         </a>
         <button *ngIf="authService.isLoggedIn()" (click)="logout()" class="text-slate-400 hover:text-white font-semibold transition-colors">
@@ -28,7 +30,8 @@
 
       <!-- Mobile Menu Button -->
       <div class="md:hidden flex items-center gap-3">
-        <a routerLink="/cart" class="bg-red-500 hover:bg-red-600 text-white px-4 py-1.5 rounded-full font-semibold text-sm transition-all shadow-[0_0_10px_rgba(239,68,68,0.5)]">
+        <a routerLink="/cart" class="bg-amber-400 hover:bg-amber-300 text-black px-4 py-1.5 rounded-full font-black text-sm transition-all shadow-[0_0_10px_rgba(245,158,11,0.4)] flex items-center gap-1.5">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
           Carrito
         </a>
         <button (click)="toggleMenu()" class="text-slate-300 hover:text-white focus:outline-none p-1">
@@ -41,40 +44,50 @@
     </div>
 
     <!-- Mobile Menu Dropdown -->
-    <div *ngIf="isMenuOpen" class="md:hidden absolute top-full left-0 right-0 mt-4 bg-slate-800 border border-slate-700 shadow-2xl rounded-2xl overflow-hidden flex flex-col mx-4 origin-top transition-all">
-      <a routerLink="/" (click)="toggleMenu()" class="px-6 py-4 border-b border-slate-700/50 hover:bg-slate-700 hover:text-red-500 transition-colors">Inicio</a>
-      <a routerLink="/menu" (click)="toggleMenu()" class="px-6 py-4 border-b border-slate-700/50 hover:bg-slate-700 hover:text-red-500 transition-colors">Menú</a>
-      <a *ngIf="authService.isLoggedIn()" routerLink="/my-orders" (click)="toggleMenu()" class="px-6 py-4 border-b border-slate-700/50 hover:bg-slate-700 hover:text-red-500 transition-colors">Mis Órdenes</a>
-      <a *ngIf="authService.isLoggedIn()" routerLink="/my-coupons" (click)="toggleMenu()" class="px-6 py-4 border-b border-slate-700/50 hover:bg-slate-700 hover:text-red-500 transition-colors">Mis Cupones</a>
-      <a *ngIf="authService.isLoggedIn()" routerLink="/profile" (click)="toggleMenu()" class="px-6 py-4 border-b border-slate-700/50 hover:bg-slate-700 hover:text-red-500 transition-colors">Mi Perfil</a>
-      <a *ngIf="!authService.isLoggedIn()" routerLink="/login" (click)="toggleMenu()" class="px-6 py-4 border-b border-slate-700/50 text-red-400 hover:bg-slate-700 transition-colors font-semibold">Iniciar Sesión</a>
-      <button *ngIf="authService.isLoggedIn()" (click)="logout(); toggleMenu()" class="px-6 py-4 text-left text-slate-400 hover:text-white hover:bg-slate-700 transition-colors font-medium">Cerrar Sesión</button>
+    <div *ngIf="isMenuOpen" class="md:hidden absolute top-full left-0 right-0 mt-4 bg-[#141418] border border-amber-500/20 shadow-2xl rounded-2xl overflow-hidden flex flex-col mx-4 origin-top transition-all">
+      <a routerLink="/" (click)="toggleMenu()" class="px-6 py-4 border-b border-slate-800 hover:bg-slate-800 hover:text-amber-400 transition-colors">Inicio</a>
+      <a routerLink="/menu" (click)="toggleMenu()" class="px-6 py-4 border-b border-slate-800 hover:bg-slate-800 hover:text-amber-400 transition-colors">Menú</a>
+      <a *ngIf="authService.isLoggedIn()" routerLink="/my-orders" (click)="toggleMenu()" class="px-6 py-4 border-b border-slate-800 hover:bg-slate-800 hover:text-amber-400 transition-colors">Mis Órdenes</a>
+      <a *ngIf="authService.isLoggedIn()" routerLink="/my-coupons" (click)="toggleMenu()" class="px-6 py-4 border-b border-slate-800 hover:bg-slate-800 hover:text-amber-400 transition-colors">Mis Cupones</a>
+      <a *ngIf="authService.isLoggedIn()" routerLink="/profile" (click)="toggleMenu()" class="px-6 py-4 border-b border-slate-800 hover:bg-slate-800 hover:text-amber-400 transition-colors">Mi Perfil</a>
+      <a *ngIf="!authService.isLoggedIn()" routerLink="/login" (click)="toggleMenu()" class="px-6 py-4 border-b border-slate-800 text-amber-400 hover:bg-slate-800 transition-colors font-bold">Iniciar Sesión</a>
+      <button *ngIf="authService.isLoggedIn()" (click)="logout(); toggleMenu()" class="px-6 py-4 text-left text-slate-400 hover:text-white hover:bg-slate-800 transition-colors font-medium">Cerrar Sesión</button>
     </div>
   </nav>
 
   <!-- Hero Section -->
-  <header class="relative overflow-hidden flex items-center justify-center min-h-[80vh]">
+  <header class="relative overflow-hidden flex items-center justify-center min-h-[85vh] py-16">
     <div class="absolute inset-0 z-0">
-      <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Sushi Background" class="w-full h-full object-cover opacity-30" />
-      <div class="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent"></div>
+      <img src="https://images.unsplash.com/photo-1619740455993-9e612b1af08a?auto=format&fit=crop&w=1920&q=80" alt="King Dogos Background" class="w-full h-full object-cover opacity-25" />
+      <div class="absolute inset-0 bg-gradient-to-t from-[#0b0b0d] via-[#0b0b0d]/80 to-transparent"></div>
     </div>
     
-    <div class="relative z-10 text-center max-w-3xl px-6">
-      <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
-        El Mejor Sushi, <br/>
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500">
+    <div class="relative z-10 text-center max-w-3xl px-6 flex flex-col items-center">
+      <!-- Official Logo Emblem -->
+      <div class="relative mb-6 group">
+        <div class="absolute -inset-2 bg-gradient-to-r from-amber-500/60 to-yellow-300/40 rounded-full blur-2xl opacity-75 group-hover:opacity-100 transition duration-1000"></div>
+        <img src="assets/logo.png" alt="King Dogos GDL" class="relative w-36 h-36 md:w-48 md:h-48 object-contain rounded-full border-2 border-amber-400/80 shadow-[0_0_35px_rgba(245,158,11,0.5)] bg-black p-1 hover:scale-105 transition-transform duration-300" />
+      </div>
+
+      <div class="inline-flex items-center gap-2 bg-amber-400/15 text-amber-300 border border-amber-400/30 px-5 py-1.5 rounded-full text-xs md:text-sm font-extrabold mb-6 uppercase tracking-wider">
+        Los Reyes del Dogo en Guadalajara
+      </div>
+
+      <h1 class="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight mb-6 leading-tight">
+        Los Mejores Dogos, <br/>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-yellow-500">
           Directo a tu Puerta.
         </span>
       </h1>
-      <p class="text-lg md:text-xl text-slate-300 mb-10">
-        Preparado al momento con ingredientes premium. Disfruta de la auténtica experiencia japonesa sin salir de casa.
+      <p class="text-base md:text-xl text-slate-300 mb-10 leading-relaxed max-w-2xl">
+        Preparados al momento con salchicha jumbo envuelta en tocino crujiente, pan artesanal calientito y los toppings gourmet más legendarios de Guadalajara.
       </p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a routerLink="/menu" class="bg-red-500 hover:bg-red-600 px-8 py-4 rounded-full font-bold text-lg transition-transform hover:scale-105 shadow-[0_0_20px_rgba(239,68,68,0.4)]">
+      <div class="flex flex-col sm:flex-row gap-4 justify-center w-full max-w-md">
+        <a routerLink="/menu" class="bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-300 hover:to-yellow-400 text-black px-8 py-4 rounded-full font-black text-lg transition-all hover:scale-105 shadow-[0_0_30px_rgba(245,158,11,0.5)] flex items-center justify-center gap-2">
           Ver Menú Completo
         </a>
-        <a routerLink="/promotions" class="bg-white/10 hover:bg-white/20 backdrop-blur-md px-8 py-4 rounded-full font-bold text-lg transition-all border border-white/10">
-          Ver Promociones
+        <a routerLink="/cart" class="bg-white/10 hover:bg-white/20 backdrop-blur-md px-8 py-4 rounded-full font-bold text-lg transition-all border border-amber-400/30 hover:border-amber-400 text-white flex items-center justify-center">
+          Ver Mi Carrito
         </a>
       </div>
     </div>

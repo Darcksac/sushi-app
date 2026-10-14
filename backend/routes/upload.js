@@ -15,7 +15,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: 'sushi-app',
+    folder: 'king-dogos-gdl',
     allowed_formats: ['jpg', 'png', 'jpeg', 'webp']
   }
 });

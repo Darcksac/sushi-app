@@ -16,7 +16,7 @@ const Dish = sequelize.define('Dish', {
   description: { type: DataTypes.TEXT },
   price: { type: DataTypes.FLOAT, allowNull: false },
   imageUrl: { type: DataTypes.STRING },
-  category: { type: DataTypes.STRING, defaultValue: 'Sushis' },
+  category: { type: DataTypes.STRING, defaultValue: 'Dogos Clásicos' },
   isAvailable: { type: DataTypes.BOOLEAN, defaultValue: true },
   customizations: { type: DataTypes.JSON, defaultValue: [] }
 });

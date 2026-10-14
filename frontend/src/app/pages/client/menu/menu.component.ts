@@ -14,12 +14,12 @@ import { RouterModule } from '@angular/router';
       <!-- Header Area -->
       <div class="bg-white shadow-sm sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <a routerLink="/" class="text-red-500 font-bold hover:text-red-600 flex items-center gap-2 transition-colors">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-            <span class="hidden sm:inline">Inicio</span>
+          <a routerLink="/" class="flex items-center gap-2 hover:opacity-85 transition-opacity">
+            <img src="assets/logo.png" alt="King Dogos GDL" class="h-10 w-10 object-contain rounded-full border border-amber-400 shadow-sm bg-black" />
+            <span class="font-black text-slate-900 tracking-tight hidden sm:inline">KING<span class="text-amber-500">DOGOS</span> GDL</span>
           </a>
-          <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Nuestro Menú</h1>
-          <a routerLink="/my-orders" class="text-slate-600 font-bold hover:text-slate-900 transition-colors flex items-center gap-2">
+          <h1 class="text-2xl font-black text-slate-900 tracking-tight">Nuestro Menú</h1>
+          <a routerLink="/my-orders" class="text-slate-600 font-bold hover:text-amber-600 transition-colors flex items-center gap-2">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
             <span class="hidden sm:inline">Órdenes</span>
           </a>
@@ -40,11 +40,12 @@ import { RouterModule } from '@angular/router';
             <button 
               *ngFor="let cat of getCategories()"
               (click)="selectCategory(cat)"
-              [class.bg-red-500]="selectedCategory === cat"
-              [class.text-white]="selectedCategory === cat"
+              [class.bg-amber-400]="selectedCategory === cat"
+              [class.text-black]="selectedCategory === cat"
+              [class.font-black]="selectedCategory === cat"
               [class.bg-slate-100]="selectedCategory !== cat"
               [class.text-slate-600]="selectedCategory !== cat"
-              class="px-6 py-2 rounded-full font-bold whitespace-nowrap transition-all hover:bg-red-500 hover:text-white">
+              class="px-6 py-2 rounded-full font-bold whitespace-nowrap transition-all hover:bg-amber-300 hover:text-black">
               {{ cat }}
             </button>
           </div>
@@ -78,7 +79,7 @@ import { RouterModule } from '@angular/router';
                   <h4 class="text-2xl font-bold mb-2 text-slate-900 line-clamp-1">{{dish.name}}</h4>
                   <p class="text-slate-500 mb-6 flex-1 line-clamp-2 text-sm leading-relaxed">{{dish.description}}</p>
                   
-                  <button (click)="openCustomizer(dish)" class="w-full flex items-center justify-center gap-2 bg-slate-50 hover:bg-red-500 text-slate-700 hover:text-white font-bold py-3.5 px-4 rounded-2xl transition-all duration-300 mt-auto group/btn">
+                  <button (click)="openCustomizer(dish)" class="w-full flex items-center justify-center gap-2 bg-amber-50 hover:bg-amber-400 text-amber-900 hover:text-black font-extrabold py-3.5 px-4 rounded-2xl transition-all duration-300 mt-auto group/btn shadow-sm">
                     <svg class="w-5 h-5 transition-transform group-hover/btn:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                     Agregar
                   </button>
@@ -92,16 +93,16 @@ import { RouterModule } from '@angular/router';
       
       <!-- Floating Cart Button -->
       <div class="fixed bottom-8 left-0 right-0 z-50 flex justify-center pointer-events-none" *ngIf="cartService.items().length > 0">
-        <a routerLink="/cart" class="pointer-events-auto flex items-center gap-3 bg-red-500 hover:bg-red-600 text-white font-bold py-4 px-8 rounded-full transition-transform hover:scale-105 shadow-[0_10px_40px_rgba(239,68,68,0.4)] border-4 border-white/50 backdrop-blur-md">
+        <a routerLink="/cart" class="pointer-events-auto flex items-center gap-3 bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-300 hover:to-yellow-400 text-black font-black py-4 px-8 rounded-full transition-transform hover:scale-105 shadow-[0_10px_40px_rgba(245,158,11,0.5)] border-4 border-black/30 backdrop-blur-md">
           <div class="relative">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-            <span class="absolute -top-2 -right-3 bg-white text-red-500 text-xs font-black w-5 h-5 flex items-center justify-center rounded-full shadow-sm">
+            <span class="absolute -top-2 -right-3 bg-black text-amber-400 text-xs font-black w-5 h-5 flex items-center justify-center rounded-full shadow-sm border border-amber-400/40">
               {{ cartService.items().length }}
             </span>
           </div>
           <span>Ver Orden ($ {{ cartService.total() }})</span>
         </a>
-        </div>
+      </div>
 
       <!-- Customization Modal -->
       <div *ngIf="selectedDish" class="fixed inset-0 z-[100] flex items-center justify-center px-4">
@@ -145,12 +146,12 @@ import { RouterModule } from '@angular/router';
                 <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                 Notas especiales
               </h4>
-              <textarea [(ngModel)]="notes" placeholder="Ej. Sin pepino, soya extra, etc." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 focus:ring-2 focus:ring-red-500 focus:border-red-500 resize-none h-20"></textarea>
+              <textarea [(ngModel)]="notes" placeholder="Ej. Sin cebolla, extra mostaza, etc." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 resize-none h-20"></textarea>
             </div>
           </div>
           
           <div class="p-6 border-t border-slate-100 bg-slate-50 shrink-0">
-            <button (click)="confirmAddToCart()" class="w-full flex items-center justify-between bg-red-500 hover:bg-red-600 text-white font-bold py-4 px-6 rounded-xl transition-all shadow-sm">
+            <button (click)="confirmAddToCart()" class="w-full flex items-center justify-between bg-amber-400 hover:bg-amber-300 text-black font-black py-4 px-6 rounded-xl transition-all shadow-md hover:scale-[1.02]">
               <span>Agregar a Orden</span>
               <span>$ {{ getSelectedDishTotal() }}</span>
             </button>
@@ -205,7 +206,7 @@ export class MenuComponent implements OnInit {
   }
 
   getCategories(): string[] {
-    const desiredOrder = ['Sushis', 'Platillos', 'Bebidas', 'Postres', 'Otros'];
+    const desiredOrder = ['Dogos Clásicos', 'Dogos Especiales', 'Snacks & Papas', 'Bebidas', 'Postres', 'Otros'];
     return Object.keys(this.groupedDishes).sort((a, b) => {
       let indexA = desiredOrder.indexOf(a);
       let indexB = desiredOrder.indexOf(b);

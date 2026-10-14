@@ -1,15 +1,19 @@
 <div class="flex h-screen bg-slate-100">
   <!-- Sidebar -->
   <aside class="w-64 bg-slate-900 text-white flex flex-col shadow-2xl">
-    <div class="p-6 text-2xl font-bold tracking-tighter text-red-500">
-      SUSHI<span class="text-white">ADMIN</span>
+    <div class="p-6 text-xl font-black tracking-tight text-white flex items-center gap-3 border-b border-slate-800">
+      <img src="assets/logo.png" alt="King Dogos GDL" class="w-9 h-9 object-contain rounded-full border border-amber-500/40 shadow-md bg-black" />
+      <div>
+        <div class="leading-none text-amber-400 font-black">KING DOGOS</div>
+        <div class="text-[10px] tracking-widest text-slate-400 font-medium uppercase mt-0.5">Admin Panel</div>
+      </div>
     </div>
-    <nav class="flex-1 px-4 space-y-2 mt-8">
+    <nav class="flex-1 px-4 space-y-2 mt-6">
       <a routerLink="/admin" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white transition-colors">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
         Dashboard
       </a>
-      <a routerLink="/admin/dishes" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-red-500/10 text-red-500 font-semibold transition-colors">
+      <a routerLink="/admin/dishes" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-amber-400/10 text-amber-400 font-bold border-l-4 border-amber-400 transition-colors">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
         Gestión de Menú
       </a>
@@ -32,7 +36,7 @@
         <h1 class="text-3xl font-bold text-slate-900">Gestión de Menú</h1>
         <p class="text-slate-500 mt-1">Añade, edita y organiza los platillos de tu tienda.</p>
       </div>
-      <button (click)="openCreateModal()" class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-xl transition-colors flex items-center gap-2">
+      <button (click)="openCreateModal()" class="bg-amber-400 hover:bg-amber-300 text-slate-950 font-black py-3 px-6 rounded-xl transition-all shadow-md shadow-amber-400/20 flex items-center gap-2">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
         Nuevo Platillo
       </button>
@@ -60,7 +64,7 @@
         <div class="p-5 flex-1 flex flex-col">
           <div class="flex justify-between items-start mb-2">
             <h3 class="text-xl font-bold text-slate-900 line-clamp-1">{{dish.name}}</h3>
-            <span class="font-bold text-red-500 whitespace-nowrap ml-3">$ {{dish.price}}</span>
+            <span class="font-black text-amber-500 whitespace-nowrap ml-3">$ {{dish.price}}</span>
           </div>
           <p class="text-sm text-slate-500 mb-4 line-clamp-2 flex-1">{{dish.description}}</p>
           
@@ -90,23 +94,23 @@
       <div class="p-8 space-y-5 overflow-y-auto flex-1">
         <div>
           <label class="block text-sm font-semibold text-slate-700 mb-2">Nombre del Platillo</label>
-          <input type="text" [(ngModel)]="currentDish.name" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:bg-white transition-all" placeholder="Ej: Dragon Roll" />
+          <input type="text" [(ngModel)]="currentDish.name" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:bg-white transition-all" placeholder="Ej: Dogo Monstruo King" />
         </div>
         
         <div>
           <label class="block text-sm font-semibold text-slate-700 mb-2">Descripción</label>
-          <textarea [(ngModel)]="currentDish.description" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:bg-white transition-all resize-none" placeholder="Ingredientes y detalles..."></textarea>
+          <textarea [(ngModel)]="currentDish.description" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:bg-white transition-all resize-none" placeholder="Ingredientes y detalles..."></textarea>
         </div>
 
 
         <div class="grid grid-cols-2 gap-4">
           <div>
             <label class="block text-sm font-semibold text-slate-700 mb-2">Precio ($)</label>
-            <input type="number" [(ngModel)]="currentDish.price" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:bg-white transition-all" />
+            <input type="number" [(ngModel)]="currentDish.price" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:bg-white transition-all" />
           </div>
           <div>
             <label class="block text-sm font-semibold text-slate-700 mb-2">Categoría</label>
-            <select [(ngModel)]="currentDish.category" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:bg-white transition-all">
+            <select [(ngModel)]="currentDish.category" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:bg-white transition-all">
               <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
             </select>
           </div>
@@ -121,7 +125,7 @@
                 <svg class="w-8 h-8 opacity-50" fill="currentColor" viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
               </div>
               <div *ngIf="isUploading" class="absolute inset-0 bg-white/70 flex items-center justify-center backdrop-blur-sm">
-                <svg class="animate-spin h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                <svg class="animate-spin h-5 w-5 text-amber-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
               </div>
             </div>
             <div class="flex-1">
@@ -150,11 +154,11 @@
           <div class="space-y-3" *ngIf="currentDish.customizations && currentDish.customizations.length > 0">
             <div *ngFor="let custom of currentDish.customizations; let i = index" class="flex items-center gap-3 bg-white p-3 border border-slate-200 rounded-xl">
               <div class="flex-1">
-                <input type="text" [(ngModel)]="custom.name" placeholder="Nombre (ej. Extra Queso)" class="w-full bg-slate-50 border-none rounded-lg py-2 px-3 text-sm focus:ring-2 focus:ring-red-500" />
+                <input type="text" [(ngModel)]="custom.name" placeholder="Nombre (ej. Extra Tocino)" class="w-full bg-slate-50 border-none rounded-lg py-2 px-3 text-sm focus:ring-2 focus:ring-amber-400" />
               </div>
               <div class="w-24 relative">
                 <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">$</span>
-                <input type="number" [(ngModel)]="custom.price" placeholder="0.00" class="w-full bg-slate-50 border-none rounded-lg py-2 pl-7 pr-3 text-sm focus:ring-2 focus:ring-red-500" />
+                <input type="number" [(ngModel)]="custom.price" placeholder="0.00" class="w-full bg-slate-50 border-none rounded-lg py-2 pl-7 pr-3 text-sm focus:ring-2 focus:ring-amber-400" />
               </div>
               <button (click)="removeCustomization(i)" type="button" class="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
@@ -164,14 +168,14 @@
         </div>
 
         <div class="pt-4 border-t border-slate-100 flex items-center gap-3">
-          <input type="checkbox" id="isAvailable" [(ngModel)]="currentDish.isAvailable" class="w-5 h-5 text-red-500 rounded focus:ring-red-500 border-gray-300" />
+          <input type="checkbox" id="isAvailable" [(ngModel)]="currentDish.isAvailable" class="w-5 h-5 text-amber-500 rounded focus:ring-amber-400 border-gray-300" />
           <label for="isAvailable" class="text-slate-700 font-medium cursor-pointer select-none">Platillo disponible al público</label>
         </div>
       </div>
       
       <div class="px-8 py-5 border-t border-slate-100 bg-slate-50 flex justify-end gap-3 shrink-0">
         <button (click)="closeModal()" class="px-6 py-3 font-semibold text-slate-600 hover:bg-slate-200 rounded-xl transition-colors">Cancelar</button>
-        <button (click)="saveDish()" [disabled]="isUploading" class="px-8 py-3 bg-red-500 hover:bg-red-600 text-white font-bold rounded-xl shadow-lg shadow-red-500/30 transition-colors disabled:opacity-50">Guardar</button>
+        <button (click)="saveDish()" [disabled]="isUploading" class="px-8 py-3 bg-amber-400 hover:bg-amber-300 text-slate-950 font-black rounded-xl shadow-lg shadow-amber-400/30 transition-colors disabled:opacity-50">Guardar</button>
       </div>
     </div>
   </div>

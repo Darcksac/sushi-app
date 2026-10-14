@@ -19,7 +19,7 @@ export class DishesComponent implements OnInit {
   router = inject(Router);
 
   dishes: any[] = [];
-  categories = ['Bebidas', 'Platillos', 'Sushis', 'Postres'];
+  categories = ['Dogos Clásicos', 'Dogos Especiales', 'Snacks & Papas', 'Bebidas', 'Postres'];
   
   showModal = false;
   isEditing = false;
@@ -29,7 +29,7 @@ export class DishesComponent implements OnInit {
     description: '',
     price: 0,
     imageUrl: '',
-    category: 'Sushis',
+    category: 'Dogos Clásicos',
     isAvailable: true,
     customizations: []
   };
@@ -87,7 +87,7 @@ export class DishesComponent implements OnInit {
       description: '',
       price: 0,
       imageUrl: '',
-      category: 'Sushis',
+      category: 'Dogos Clásicos',
       isAvailable: true,
       customizations: []
     };

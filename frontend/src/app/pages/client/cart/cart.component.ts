@@ -15,11 +15,11 @@ import Swal from 'sweetalert2';
   template: `
     <div class="min-h-screen bg-slate-50 py-12 px-6">
       <div class="max-w-4xl mx-auto mb-6 flex justify-between items-center">
-        <a routerLink="/" class="text-red-500 font-bold hover:text-red-600 flex items-center gap-2 transition-colors">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-          Volver al Inicio
+        <a routerLink="/" class="text-slate-800 font-black hover:text-amber-500 flex items-center gap-2 transition-colors">
+          <img src="assets/logo.png" alt="King Dogos GDL" class="h-9 w-9 object-contain rounded-full border border-amber-400 bg-black" />
+          <span>Volver al Inicio</span>
         </a>
-        <a routerLink="/menu" class="text-slate-600 font-bold hover:text-slate-900 transition-colors">
+        <a routerLink="/menu" class="text-slate-600 font-bold hover:text-amber-500 transition-colors">
           Menú
         </a>
       </div>
@@ -32,7 +32,7 @@ import Swal from 'sweetalert2';
           <svg class="w-24 h-24 text-slate-200 mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
           <h3 class="text-2xl font-bold text-slate-900 mb-2">Tu carrito está vacío</h3>
           <p class="text-slate-500 mb-8">Parece que aún no has agregado nada de nuestro delicioso menú.</p>
-          <a routerLink="/menu" class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-8 rounded-full transition-colors">
+          <a routerLink="/menu" class="bg-amber-400 hover:bg-amber-300 text-black font-black py-3 px-8 rounded-full transition-all shadow-md">
             Explorar Menú
           </a>
         </div>
@@ -89,17 +89,17 @@ import Swal from 'sweetalert2';
               </div>
               <div class="border-t border-slate-700 pt-4 flex justify-between font-bold text-xl">
                 <span>Total</span>
-                <span class="text-red-500">$ {{ finalTotal }}</span>
+                <span class="text-amber-400">$ {{ finalTotal }}</span>
               </div>
             </div>
             
-            <div *ngIf="coupons.length > 0" class="mb-6 bg-slate-800 p-4 rounded-xl border border-dashed border-red-500/50">
-              <h4 class="text-red-400 font-bold mb-2 flex items-center gap-2">
+            <div *ngIf="coupons.length > 0" class="mb-6 bg-slate-800 p-4 rounded-xl border border-dashed border-amber-500/40">
+              <h4 class="text-amber-400 font-bold mb-2 flex items-center gap-2">
                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path></svg>
                 Tus Cupones Disponibles
               </h4>
               <div class="flex flex-wrap gap-2">
-                <span *ngFor="let c of coupons" (click)="couponCodeInput = c.code" class="bg-red-500/20 text-red-300 px-3 py-1 rounded cursor-pointer hover:bg-red-500/30 transition-colors font-mono text-sm border border-red-500/30">
+                <span *ngFor="let c of coupons" (click)="couponCodeInput = c.code" class="bg-amber-500/20 text-amber-300 px-3 py-1 rounded cursor-pointer hover:bg-amber-500/30 transition-colors font-mono text-sm border border-amber-500/30">
                   {{ c.code }} ({{ c.discountPercentage }}%)
                 </span>
               </div>
@@ -108,15 +108,15 @@ import Swal from 'sweetalert2';
             <div class="mb-8">
               <label class="block text-sm font-medium text-slate-300 mb-2">Código de Descuento</label>
               <div class="flex gap-2">
-                <input type="text" [(ngModel)]="couponCodeInput" [disabled]="appliedCoupon" placeholder="Ej. FREE-SUSHI-XYZ" class="w-full bg-slate-800 border-none rounded-xl py-3 px-4 text-white focus:ring-2 focus:ring-red-500 disabled:opacity-50 uppercase" />
+                <input type="text" [(ngModel)]="couponCodeInput" [disabled]="appliedCoupon" placeholder="Ej. KINGDOGO20" class="w-full bg-slate-800 border-none rounded-xl py-3 px-4 text-white focus:ring-2 focus:ring-amber-400 disabled:opacity-50 uppercase" />
                 <button *ngIf="!appliedCoupon" (click)="applyCoupon()" class="bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 px-6 rounded-xl transition-colors">Aplicar</button>
-                <button *ngIf="appliedCoupon" (click)="removeCoupon()" class="bg-red-500/20 text-red-500 hover:bg-red-500/30 font-bold py-3 px-6 rounded-xl transition-colors border border-red-500/30">Quitar</button>
+                <button *ngIf="appliedCoupon" (click)="removeCoupon()" class="bg-amber-500/20 text-amber-400 hover:bg-amber-500/30 font-bold py-3 px-6 rounded-xl transition-colors border border-amber-500/30">Quitar</button>
               </div>
             </div>
             
             <div class="mb-8">
               <label class="block text-sm font-medium text-slate-300 mb-2">Hora de Entrega Solicitada</label>
-              <input type="time" [(ngModel)]="requestedTime" class="w-full bg-slate-800 border-none rounded-xl py-3 px-4 text-white focus:ring-2 focus:ring-red-500" />
+              <input type="time" [(ngModel)]="requestedTime" class="w-full bg-slate-800 border-none rounded-xl py-3 px-4 text-white focus:ring-2 focus:ring-amber-400" />
             </div>
 
             <div class="mb-8 border-t border-slate-700 pt-6">
@@ -131,8 +131,8 @@ import Swal from 'sweetalert2';
               </div>
             </div>
 
-            <button *ngIf="authService.isLoggedIn()" (click)="submitOrder()" [disabled]="loading || !latitude" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-4 px-4 rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-              {{ loading ? 'Procesando...' : 'Confirmar Orden' }}
+            <button *ngIf="authService.isLoggedIn()" (click)="submitOrder()" [disabled]="loading || !latitude" class="w-full bg-amber-400 hover:bg-amber-300 text-black font-black py-4 px-4 rounded-xl transition-all shadow-md hover:scale-[1.01] disabled:opacity-50 disabled:cursor-not-allowed">
+              {{ loading ? 'Procesando...' : 'Confirmar Orden King Dogos' }}
             </button>
             <div *ngIf="!authService.isLoggedIn()" class="text-center">
               <p class="text-sm text-slate-400 mb-4">Debes iniciar sesión para ordenar</p>

@@ -6,10 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  // Enlace oficial del backend alojado en Render.
-  private productionUrl = 'https://sushi-app-s1qp.onrender.com/api';
-  private localUrl = 'http://localhost:3000/api';
-  
+  private productionUrl = 'https://kingdogos.onrender.com/api';
+  private localUrl = '/api';
+
   private get apiUrl(): string {
     return window.location.hostname === 'localhost' ? this.localUrl : this.productionUrl;
   }

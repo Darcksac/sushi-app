@@ -13,11 +13,11 @@ import Swal from 'sweetalert2';
   template: `
     <div class="min-h-screen bg-slate-50 py-12 px-6">
       <div class="max-w-4xl mx-auto mb-6 flex justify-between items-center">
-        <a routerLink="/" class="text-red-500 font-bold hover:text-red-600 flex items-center gap-2 transition-colors">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-          Volver al Inicio
+        <a routerLink="/" class="text-slate-800 font-black hover:text-amber-500 flex items-center gap-2 transition-colors">
+          <img src="assets/logo.png" alt="King Dogos GDL" class="h-9 w-9 object-contain rounded-full border border-amber-400 bg-black" />
+          <span>Volver al Inicio</span>
         </a>
-        <a routerLink="/menu" class="text-slate-600 font-bold hover:text-slate-900 transition-colors">
+        <a routerLink="/menu" class="text-slate-600 font-bold hover:text-amber-500 transition-colors">
           Menú
         </a>
       </div>
@@ -30,7 +30,7 @@ import Swal from 'sweetalert2';
           <svg class="w-24 h-24 text-slate-200 mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
           <h3 class="text-2xl font-bold text-slate-900 mb-2">No tienes órdenes aún</h3>
           <p class="text-slate-500 mb-8">Ve a nuestro menú y pide algo delicioso.</p>
-          <a routerLink="/menu" class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-8 rounded-full transition-colors">
+          <a routerLink="/menu" class="bg-amber-400 hover:bg-amber-300 text-black font-black py-3 px-8 rounded-full transition-all shadow-md">
             Ver Menú
           </a>
         </div>
@@ -71,13 +71,13 @@ import Swal from 'sweetalert2';
               <!-- Progress Bar -->
               <div class="mt-4 mb-4">
                 <div class="flex justify-between text-xs font-bold text-slate-400 mb-2 px-1">
-                  <span [class.text-red-500]="getProgressStep(order.status) >= 1">Pendiente</span>
-                  <span [class.text-red-500]="getProgressStep(order.status) >= 2">Preparando</span>
-                  <span [class.text-red-500]="getProgressStep(order.status) >= 3">En Camino</span>
+                  <span [class.text-amber-400]="getProgressStep(order.status) >= 1">Pendiente</span>
+                  <span [class.text-amber-400]="getProgressStep(order.status) >= 2">Preparando</span>
+                  <span [class.text-amber-400]="getProgressStep(order.status) >= 3">En Camino</span>
                   <span [class.text-emerald-500]="getProgressStep(order.status) >= 4">Entregado</span>
                 </div>
                 <div class="h-2 bg-slate-100 rounded-full overflow-hidden">
-                  <div class="h-full bg-red-500 transition-all duration-1000 ease-out" 
+                  <div class="h-full bg-amber-400 transition-all duration-1000 ease-out" 
                        [class.bg-emerald-500]="order.status === 'completed'"
                        [style.width.%]="getProgressPercentage(order.status)"></div>
                 </div>
@@ -85,7 +85,7 @@ import Swal from 'sweetalert2';
 
               <!-- Reorder Button -->
               <div class="pt-4 border-t border-slate-100">
-                <button (click)="reorder(order)" class="w-full flex items-center justify-center gap-2 bg-red-50 hover:bg-red-100 text-red-600 font-bold py-3 px-4 rounded-xl transition-colors">
+                <button (click)="reorder(order)" class="w-full flex items-center justify-center gap-2 bg-amber-50 hover:bg-amber-400 text-amber-900 hover:text-black font-black py-3 px-4 rounded-xl transition-all shadow-sm">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
                   Volver a Pedir
                 </button>
@@ -95,7 +95,7 @@ import Swal from 'sweetalert2';
             <div class="md:w-64 bg-slate-900 text-white rounded-2xl p-6 flex flex-col justify-between">
               <div>
                 <p class="text-slate-400 text-sm mb-1">Total a pagar</p>
-                <p class="text-3xl font-bold text-red-500">$ {{ order.totalAmount }}</p>
+                <p class="text-3xl font-black text-amber-400">$ {{ order.totalAmount }}</p>
               </div>
               <div class="mt-6">
                 <p class="text-slate-400 text-sm mb-1">Hora de Entrega</p>

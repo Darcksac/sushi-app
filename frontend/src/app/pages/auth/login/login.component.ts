@@ -11,44 +11,47 @@ import { GoogleSigninButtonModule, SocialAuthService } from '@abacritt/angularx-
   imports: [CommonModule, FormsModule, RouterModule, GoogleSigninButtonModule],
   template: `
     <div class="min-h-screen bg-slate-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div class="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 class="mt-6 text-center text-3xl font-extrabold text-slate-900">
+      <div class="sm:mx-auto sm:w-full sm:max-w-md text-center">
+        <a routerLink="/" class="inline-block mb-3">
+          <img src="assets/logo.png" alt="King Dogos GDL" class="w-24 h-24 mx-auto object-contain rounded-full border-2 border-amber-400 shadow-[0_0_20px_rgba(245,158,11,0.4)] bg-black p-1 hover:scale-105 transition-transform" />
+        </a>
+        <h2 class="text-3xl font-black text-slate-900 tracking-tight">
           Inicia sesión en tu cuenta
         </h2>
-        <p class="mt-2 text-center text-sm text-slate-600">
+        <p class="mt-2 text-sm text-slate-600">
           ¿No tienes cuenta?
-          <a routerLink="/register" class="font-medium text-red-600 hover:text-red-500">
+          <a routerLink="/register" class="font-bold text-amber-600 hover:text-amber-500">
             Regístrate aquí
           </a>
         </p>
       </div>
 
       <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 border border-slate-100">
+        <div class="bg-white py-8 px-4 shadow-xl sm:rounded-2xl sm:px-10 border border-slate-100">
           <form class="space-y-6" (ngSubmit)="onSubmit()">
-            <div *ngIf="errorMessage" class="bg-red-50 p-4 rounded-md text-red-600 text-sm">
+            <div *ngIf="errorMessage" class="bg-red-50 p-4 rounded-xl text-red-600 text-sm border border-red-200">
               {{ errorMessage }}
             </div>
             
             <div>
-              <label for="email" class="block text-sm font-medium text-slate-700">Correo Electrónico</label>
+              <label for="email" class="block text-sm font-semibold text-slate-700">Correo Electrónico</label>
               <div class="mt-1">
                 <input id="email" name="email" type="email" autocomplete="email" required [(ngModel)]="email"
-                  class="appearance-none block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                  class="appearance-none block w-full px-3 py-2.5 border border-slate-300 rounded-xl shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm">
               </div>
             </div>
 
             <div>
-              <label for="password" class="block text-sm font-medium text-slate-700">Contraseña</label>
+              <label for="password" class="block text-sm font-semibold text-slate-700">Contraseña</label>
               <div class="mt-1">
                 <input id="password" name="password" type="password" autocomplete="current-password" required [(ngModel)]="password"
-                  class="appearance-none block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                  class="appearance-none block w-full px-3 py-2.5 border border-slate-300 rounded-xl shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm">
               </div>
             </div>
 
             <div>
               <button type="submit" [disabled]="loading"
-                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 transition-colors">
+                class="w-full flex justify-center py-3 px-4 rounded-xl shadow-md text-sm font-black text-black bg-amber-400 hover:bg-amber-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-400 disabled:opacity-50 transition-all hover:scale-[1.02]">
                 {{ loading ? 'Iniciando...' : 'Iniciar Sesión' }}
               </button>
             </div>

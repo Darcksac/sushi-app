@@ -7,9 +7,9 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-  private productionUrl = 'https://sushi-app-s1qp.onrender.com/api/auth';
-  private localUrl = 'http://localhost:3000/api/auth';
-  
+  private productionUrl = 'https://kingdogos.onrender.com/api/auth';
+  private localUrl = '/api/auth';
+
   private get apiUrl(): string {
     return window.location.hostname === 'localhost' ? this.localUrl : this.productionUrl;
   }

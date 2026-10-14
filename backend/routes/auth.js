@@ -23,7 +23,10 @@ router.post('/register', async (req, res) => {
     });
     res.status(201).json({ message: 'User created', userId: user.id });
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    if (err.name === 'SequelizeUniqueConstraintError') {
+      return res.status(400).json({ error: 'Este correo electrónico ya está registrado. Por favor, inicia sesión.' });
+    }
+    res.status(400).json({ error: err.message || 'Error al registrar usuario' });
   }
 });
 

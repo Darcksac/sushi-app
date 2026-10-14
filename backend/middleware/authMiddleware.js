@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const SECRET = 'sushi-secret-key-12345'; // Hardcoded for development
+const SECRET = process.env.JWT_SECRET || 'king-dogos-secret-key-12345';
 
 const verifyToken = (req, res, next) => {
   const token = req.headers['authorization'];

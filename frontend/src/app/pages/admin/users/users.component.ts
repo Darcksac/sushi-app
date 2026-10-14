@@ -12,10 +12,12 @@ import { AuthService } from '../../../services/auth.service';
     <div class="min-h-screen bg-slate-50 flex">
       <!-- Sidebar / Navbar (Mobile: Top, Desktop: Left) -->
       <nav class="bg-slate-900 w-full md:w-64 md:min-h-screen flex flex-col md:fixed">
-        <div class="p-6 flex items-center justify-between md:justify-center">
-          <a routerLink="/" class="text-2xl font-black tracking-tighter text-white">
-            SUSHI<span class="text-red-500">PEKITEKI</span><span class="text-xs ml-1 text-slate-400 font-normal tracking-normal uppercase">Admin</span>
-          </a>
+        <div class="p-6 border-b border-slate-800 flex items-center justify-between md:justify-start gap-3">
+          <img src="assets/logo.png" alt="King Dogos GDL" class="w-9 h-9 object-contain rounded-full border border-amber-500/40 shadow-md bg-black" />
+          <div>
+            <div class="leading-none text-amber-400 font-black">KING DOGOS</div>
+            <div class="text-[10px] tracking-widest text-slate-400 font-medium uppercase mt-0.5">Admin Panel</div>
+          </div>
         </div>
         <div class="flex md:flex-col overflow-x-auto md:overflow-x-visible md:mt-6 px-4 md:px-0 pb-2 md:pb-0 hide-scrollbar gap-2 md:gap-0">
           <a routerLink="/admin" class="flex items-center gap-3 px-6 py-4 text-slate-400 hover:text-white hover:bg-slate-800 transition-colors whitespace-nowrap md:whitespace-normal font-medium">
@@ -26,11 +28,11 @@ import { AuthService } from '../../../services/auth.service';
             <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
             Menú
           </a>
-          <a routerLink="/admin/users" class="flex items-center gap-3 px-6 py-4 text-white bg-slate-800 border-l-4 border-red-500 whitespace-nowrap md:whitespace-normal font-bold">
+          <a routerLink="/admin/users" class="flex items-center gap-3 px-6 py-4 text-white bg-slate-800 border-l-4 border-amber-400 whitespace-nowrap md:whitespace-normal font-bold">
             <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
             Usuarios
           </a>
-          <button (click)="logout()" class="flex items-center gap-3 px-6 py-4 text-slate-400 hover:text-red-400 hover:bg-slate-800 transition-colors whitespace-nowrap md:whitespace-normal font-medium mt-auto">
+          <button (click)="logout()" class="flex items-center gap-3 px-6 py-4 text-slate-400 hover:text-amber-400 hover:bg-slate-800 transition-colors whitespace-nowrap md:whitespace-normal font-medium mt-auto">
             <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
             Cerrar Sesión
           </button>
@@ -52,7 +54,7 @@ import { AuthService } from '../../../services/auth.service';
 
         <div *ngIf="loading" class="flex-1 flex items-center justify-center">
           <div class="flex flex-col items-center gap-4">
-            <div class="w-10 h-10 border-4 border-slate-200 border-t-red-500 rounded-full animate-spin"></div>
+            <div class="w-10 h-10 border-4 border-slate-200 border-t-amber-400 rounded-full animate-spin"></div>
             <p class="text-slate-500 font-medium">Cargando usuarios...</p>
           </div>
         </div>
