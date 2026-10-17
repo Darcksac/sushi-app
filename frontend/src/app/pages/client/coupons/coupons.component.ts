@@ -9,43 +9,43 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterModule],
   template: `
-    <div class="min-h-screen bg-slate-950 py-12 px-6 text-slate-100">
-      <div class="max-w-4xl mx-auto mb-8 flex items-center justify-between">
-        <a routerLink="/" class="text-amber-400 font-bold hover:text-amber-300 flex items-center gap-2 transition-colors w-fit">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+    <div class="min-h-screen bg-slate-950 py-6 sm:py-12 px-3.5 sm:px-6 text-slate-100">
+      <div class="max-w-4xl mx-auto mb-4 sm:mb-8 flex items-center justify-between">
+        <a routerLink="/" class="text-amber-400 font-bold hover:text-amber-300 flex items-center gap-1.5 sm:gap-2 transition-colors text-xs sm:text-base w-fit">
+          <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
           Volver al Inicio
         </a>
-        <div class="flex items-center gap-3">
-          <img src="assets/logo.png" alt="King Dogos GDL" class="w-10 h-10 object-contain rounded-full border border-amber-500/40 shadow-lg shadow-amber-500/20" />
-          <span class="text-xs uppercase tracking-widest text-amber-400 font-bold">King Dogos GDL</span>
+        <div class="flex items-center gap-2 sm:gap-3">
+          <img src="assets/logo.png" alt="King Dogos GDL" class="w-8 h-8 sm:w-10 sm:h-10 object-contain rounded-full border border-amber-500/40 shadow-lg shadow-amber-500/20" />
+          <span class="text-[10px] sm:text-xs uppercase tracking-widest text-amber-400 font-bold">King Dogos GDL</span>
         </div>
       </div>
       
       <div class="max-w-4xl mx-auto">
-        <div class="flex items-center gap-3 mb-8">
-          <svg class="w-8 h-8 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path></svg>
-          <h2 class="text-3xl md:text-4xl font-black text-white tracking-tight">
+        <div class="flex items-center gap-2.5 sm:gap-3 mb-6 sm:mb-8">
+          <svg class="w-6 h-6 sm:w-8 sm:h-8 text-amber-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path></svg>
+          <h2 class="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight">
             Mis Cupones King
           </h2>
         </div>
 
-        <div *ngIf="loading" class="text-center py-16">
-          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-400 mx-auto"></div>
-          <p class="mt-4 text-slate-400">Cargando tus recompensas reales...</p>
+        <div *ngIf="loading" class="text-center py-12 sm:py-16">
+          <div class="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 border-amber-400 mx-auto"></div>
+          <p class="mt-4 text-slate-400 text-sm sm:text-base">Cargando tus recompensas reales...</p>
         </div>
 
-        <div *ngIf="!loading && coupons.length === 0" class="bg-slate-900/80 backdrop-blur p-12 rounded-3xl shadow-xl text-center border border-amber-500/20">
-          <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-400 border border-amber-500/20">
-            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path></svg>
+        <div *ngIf="!loading && coupons.length === 0" class="bg-slate-900/80 backdrop-blur p-6 sm:p-12 rounded-3xl shadow-xl text-center border border-amber-500/20">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-400 border border-amber-500/20">
+            <svg class="w-8 h-8 sm:w-10 sm:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path></svg>
           </div>
-          <h3 class="text-2xl font-black text-white mb-2">Aún no tienes cupones</h3>
-          <p class="text-slate-400 mb-8 max-w-md mx-auto">Completa pedidos para ir ganando cupones de descuento exclusivos King Dogos. ¡Al 3er, 5to y 10mo pedido obtendrás recompensas!</p>
-          <a routerLink="/menu" class="bg-amber-400 hover:bg-amber-300 text-slate-950 font-black py-3.5 px-8 rounded-full transition-all shadow-lg shadow-amber-400/20 inline-block">
+          <h3 class="text-xl sm:text-2xl font-black text-white mb-2">Aún no tienes cupones</h3>
+          <p class="text-slate-400 mb-6 sm:mb-8 text-xs sm:text-sm max-w-md mx-auto">Completa pedidos para ir ganando cupones de descuento exclusivos King Dogos. ¡Al 3er, 5to y 10mo pedido obtendrás recompensas!</p>
+          <a routerLink="/menu" class="bg-amber-400 hover:bg-amber-300 text-slate-950 font-black py-3 px-7 rounded-full transition-all shadow-lg shadow-amber-400/20 inline-block text-sm sm:text-base">
             Explorar Menú de Dogos
           </a>
         </div>
 
-        <div *ngIf="!loading && coupons.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div *ngIf="!loading && coupons.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           <div *ngFor="let coupon of coupons" 
                class="relative rounded-2xl shadow-lg border p-6 overflow-hidden transition-all"
                [ngClass]="{

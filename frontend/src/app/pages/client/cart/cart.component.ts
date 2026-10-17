@@ -13,66 +13,73 @@ import Swal from 'sweetalert2';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   template: `
-    <div class="min-h-screen bg-slate-50 py-12 px-6">
-      <div class="max-w-4xl mx-auto mb-6 flex justify-between items-center">
-        <a routerLink="/" class="text-slate-800 font-black hover:text-amber-500 flex items-center gap-2 transition-colors">
-          <img src="assets/logo.png" alt="King Dogos GDL" class="h-9 w-9 object-contain rounded-full border border-amber-400 bg-black" />
+    <div class="min-h-screen bg-slate-50 py-6 sm:py-12 px-3.5 sm:px-6">
+      <div class="max-w-4xl mx-auto mb-4 sm:mb-6 flex justify-between items-center">
+        <a routerLink="/" class="text-slate-800 font-black hover:text-amber-500 flex items-center gap-1.5 sm:gap-2 transition-colors text-xs sm:text-base">
+          <svg class="w-4 h-4 sm:w-5 sm:h-5 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+          <img src="assets/logo.png" alt="King Dogos GDL" class="h-8 w-8 sm:h-9 sm:w-9 object-contain rounded-full border border-amber-400 bg-black" />
           <span>Volver al Inicio</span>
         </a>
-        <a routerLink="/menu" class="text-slate-600 font-bold hover:text-amber-500 transition-colors">
-          Menú
+        <a routerLink="/menu" class="text-slate-700 font-bold hover:text-amber-500 transition-colors text-xs sm:text-sm bg-white border border-slate-200 py-1.5 px-3 rounded-full shadow-sm">
+          + Agregar Más
         </a>
       </div>
       <div class="max-w-4xl mx-auto">
-        <h2 class="text-4xl font-extrabold text-slate-900 mb-8 flex items-center gap-4">
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 mb-6 sm:mb-8 flex items-center gap-3">
           Tu Carrito
         </h2>
 
-        <div *ngIf="cartService.items().length === 0" class="bg-white p-12 rounded-3xl shadow-sm text-center border border-slate-100">
-          <svg class="w-24 h-24 text-slate-200 mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-          <h3 class="text-2xl font-bold text-slate-900 mb-2">Tu carrito está vacío</h3>
-          <p class="text-slate-500 mb-8">Parece que aún no has agregado nada de nuestro delicioso menú.</p>
-          <a routerLink="/menu" class="bg-amber-400 hover:bg-amber-300 text-black font-black py-3 px-8 rounded-full transition-all shadow-md">
+        <div *ngIf="cartService.items().length === 0" class="bg-white p-8 sm:p-12 rounded-3xl shadow-sm text-center border border-slate-100">
+          <svg class="w-20 h-20 sm:w-24 sm:h-24 text-slate-200 mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+          <h3 class="text-xl sm:text-2xl font-bold text-slate-900 mb-2">Tu carrito está vacío</h3>
+          <p class="text-slate-500 mb-6 sm:mb-8 text-sm sm:text-base">Parece que aún no has agregado nada de nuestro delicioso menú.</p>
+          <a routerLink="/menu" class="bg-amber-400 hover:bg-amber-300 text-black font-black py-3 px-8 rounded-full transition-all shadow-md inline-block">
             Explorar Menú
           </a>
         </div>
 
-        <div *ngIf="cartService.items().length > 0" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div class="lg:col-span-2 space-y-4">
-            <div *ngFor="let item of cartService.items()" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-6">
-              <img [src]="item.dish.imageUrl" [alt]="item.dish.name" class="w-24 h-24 object-cover rounded-xl" />
-              <div class="flex-1">
-                <h4 class="text-xl font-bold text-slate-900">{{ item.dish.name }}</h4>
-                <div class="text-slate-500 font-medium">$ {{ item.dish.price }}</div>
+        <div *ngIf="cartService.items().length > 0" class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+          <div class="lg:col-span-2 space-y-3 sm:space-y-4">
+            <div *ngFor="let item of cartService.items()" class="bg-white p-3.5 sm:p-4 rounded-2xl shadow-sm border border-slate-100 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6">
+              <div class="flex items-center gap-3 w-full sm:w-auto">
+                <img [src]="item.dish.imageUrl" [alt]="item.dish.name" class="w-16 h-16 sm:w-24 sm:h-24 object-cover rounded-xl shrink-0" />
+                <div class="flex-1 min-w-0 sm:hidden">
+                  <h4 class="text-base font-bold text-slate-900 truncate">{{ item.dish.name }}</h4>
+                  <div class="text-amber-600 font-black text-sm">$ {{ item.dish.price }}</div>
+                </div>
+              </div>
+              <div class="flex-1 w-full min-w-0">
+                <div class="hidden sm:block">
+                  <h4 class="text-lg font-bold text-slate-900">{{ item.dish.name }}</h4>
+                  <div class="text-slate-500 font-medium">$ {{ item.dish.price }}</div>
+                </div>
                 
-                <div *ngIf="item.selectedCustomizations?.length || item.notes" class="mt-2 text-sm text-slate-600 bg-slate-50 p-3 rounded-xl">
+                <div *ngIf="item.selectedCustomizations?.length || item.notes" class="mt-1 sm:mt-2 text-xs sm:text-sm text-slate-600 bg-slate-50 p-2.5 sm:p-3 rounded-xl border border-slate-100">
                   <div *ngIf="item.selectedCustomizations?.length" class="mb-1">
-                    <span class="font-bold">Extras:</span>
-                    <ul class="list-disc pl-4 mt-1">
-                      <li *ngFor="let c of item.selectedCustomizations">
-                        {{ c.name }} <span *ngIf="c.price > 0" class="text-emerald-500 font-medium">(+$ {{ c.price }})</span>
-                      </li>
-                    </ul>
+                    <span class="font-bold text-slate-800">Extras:</span>
+                    <span *ngFor="let c of item.selectedCustomizations; let last = last" class="ml-1">
+                      {{ c.name }} <span *ngIf="c.price > 0" class="text-amber-600 font-bold">(+$ {{ c.price }})</span>{{ !last ? ',' : '' }}
+                    </span>
                   </div>
-                  <div *ngIf="item.notes" class="mt-1">
-                    <span class="font-bold">Notas:</span> {{ item.notes }}
+                  <div *ngIf="item.notes" class="mt-0.5">
+                    <span class="font-bold text-slate-800">Notas:</span> {{ item.notes }}
                   </div>
                 </div>
               </div>
-              <div class="flex items-center gap-4">
-                <div class="flex items-center gap-2 bg-slate-50 p-1 rounded-lg border border-slate-200">
-                  <button (click)="updateQuantity(item.cartItemId, item.quantity - 1)" class="w-8 h-8 flex items-center justify-center text-slate-500 hover:bg-white hover:text-slate-900 rounded-md transition-colors">-</button>
-                  <span class="w-8 text-center font-bold">{{ item.quantity }}</span>
-                  <button (click)="updateQuantity(item.cartItemId, item.quantity + 1)" class="w-8 h-8 flex items-center justify-center text-slate-500 hover:bg-white hover:text-slate-900 rounded-md transition-colors">+</button>
+              <div class="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
+                <div class="flex items-center gap-2 bg-slate-50 p-1 rounded-xl border border-slate-200">
+                  <button (click)="updateQuantity(item.cartItemId, item.quantity - 1)" class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-slate-600 hover:bg-white hover:text-slate-900 rounded-lg transition-colors font-bold text-base">-</button>
+                  <span class="w-7 sm:w-8 text-center font-black text-sm sm:text-base">{{ item.quantity }}</span>
+                  <button (click)="updateQuantity(item.cartItemId, item.quantity + 1)" class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-slate-600 hover:bg-white hover:text-slate-900 rounded-lg transition-colors font-bold text-base">+</button>
                 </div>
-                <button (click)="removeItem(item.cartItemId)" class="text-red-300 hover:text-red-500 transition-colors p-2">
-                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                <button (click)="removeItem(item.cartItemId)" class="text-red-400 hover:text-red-600 transition-colors p-2" title="Eliminar producto">
+                  <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                 </button>
               </div>
             </div>
           </div>
 
-          <div class="bg-slate-900 text-white p-8 rounded-3xl shadow-xl h-fit">
+          <div class="bg-slate-900 text-white p-5 sm:p-8 rounded-2xl sm:rounded-3xl shadow-xl h-fit border border-amber-500/20">
             <h3 class="text-2xl font-bold mb-6">Resumen de Orden</h3>
             <div class="space-y-4 mb-8">
               <div class="flex justify-between text-slate-300">

@@ -9,15 +9,15 @@ import { Router, RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   template: `
-    <div class="min-h-screen bg-slate-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div class="min-h-screen bg-slate-50 flex flex-col justify-center py-8 sm:py-12 px-3.5 sm:px-6 lg:px-8">
       <div class="sm:mx-auto sm:w-full sm:max-w-md text-center">
         <a routerLink="/" class="inline-block mb-3">
-          <img src="assets/logo.png" alt="King Dogos GDL" class="w-24 h-24 mx-auto object-contain rounded-full border-2 border-amber-400 shadow-[0_0_20px_rgba(245,158,11,0.4)] bg-black p-1 hover:scale-105 transition-transform" />
+          <img src="assets/logo.png" alt="King Dogos GDL" class="w-20 h-20 sm:w-24 sm:h-24 mx-auto object-contain rounded-full border-2 border-amber-400 shadow-[0_0_20px_rgba(245,158,11,0.4)] bg-black p-1 hover:scale-105 transition-transform" />
         </a>
-        <h2 class="text-3xl font-black text-slate-900 tracking-tight">
+        <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
           Crea tu cuenta
         </h2>
-        <p class="mt-2 text-sm text-slate-600">
+        <p class="mt-2 text-xs sm:text-sm text-slate-600">
           ¿Ya tienes cuenta?
           <a routerLink="/login" class="font-bold text-amber-600 hover:text-amber-500">
             Inicia sesión aquí
@@ -25,8 +25,8 @@ import { Router, RouterModule } from '@angular/router';
         </p>
       </div>
 
-      <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 border border-slate-100">
+      <div class="mt-6 sm:mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div class="bg-white py-6 sm:py-8 px-4 sm:px-10 rounded-2xl shadow-xl border border-slate-100">
           <form class="space-y-6" (ngSubmit)="onSubmit()">
             <div *ngIf="errorMessage" class="bg-red-50 p-4 rounded-md text-red-600 text-sm">
               {{ errorMessage }}

@@ -11,26 +11,27 @@ import Swal from 'sweetalert2';
   standalone: true,
   imports: [CommonModule, RouterModule],
   template: `
-    <div class="min-h-screen bg-slate-50 py-12 px-6">
-      <div class="max-w-4xl mx-auto mb-6 flex justify-between items-center">
-        <a routerLink="/" class="text-slate-800 font-black hover:text-amber-500 flex items-center gap-2 transition-colors">
-          <img src="assets/logo.png" alt="King Dogos GDL" class="h-9 w-9 object-contain rounded-full border border-amber-400 bg-black" />
+    <div class="min-h-screen bg-slate-50 py-6 sm:py-12 px-3.5 sm:px-6">
+      <div class="max-w-4xl mx-auto mb-4 sm:mb-6 flex justify-between items-center">
+        <a routerLink="/" class="text-slate-800 font-black hover:text-amber-500 flex items-center gap-1.5 sm:gap-2 transition-colors text-xs sm:text-base">
+          <svg class="w-4 h-4 sm:w-5 sm:h-5 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+          <img src="assets/logo.png" alt="King Dogos GDL" class="h-8 w-8 sm:h-9 sm:w-9 object-contain rounded-full border border-amber-400 bg-black" />
           <span>Volver al Inicio</span>
         </a>
-        <a routerLink="/menu" class="text-slate-600 font-bold hover:text-amber-500 transition-colors">
+        <a routerLink="/menu" class="text-slate-700 font-bold hover:text-amber-500 transition-colors text-xs sm:text-sm bg-white border border-slate-200 py-1.5 px-3 rounded-full shadow-sm">
           Menú
         </a>
       </div>
       <div class="max-w-4xl mx-auto">
-        <h2 class="text-4xl font-extrabold text-slate-900 mb-8 flex items-center gap-4">
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 mb-6 sm:mb-8 flex items-center gap-3">
           Mis Órdenes
         </h2>
 
-        <div *ngIf="orders.length === 0 && !loading" class="bg-white p-12 rounded-3xl shadow-sm text-center border border-slate-100">
-          <svg class="w-24 h-24 text-slate-200 mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
-          <h3 class="text-2xl font-bold text-slate-900 mb-2">No tienes órdenes aún</h3>
-          <p class="text-slate-500 mb-8">Ve a nuestro menú y pide algo delicioso.</p>
-          <a routerLink="/menu" class="bg-amber-400 hover:bg-amber-300 text-black font-black py-3 px-8 rounded-full transition-all shadow-md">
+        <div *ngIf="orders.length === 0 && !loading" class="bg-white p-8 sm:p-12 rounded-3xl shadow-sm text-center border border-slate-100">
+          <svg class="w-20 h-20 sm:w-24 sm:h-24 text-slate-200 mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+          <h3 class="text-xl sm:text-2xl font-bold text-slate-900 mb-2">No tienes órdenes aún</h3>
+          <p class="text-slate-500 mb-6 sm:mb-8 text-sm sm:text-base">Ve a nuestro menú y pide algo delicioso.</p>
+          <a routerLink="/menu" class="bg-amber-400 hover:bg-amber-300 text-black font-black py-3 px-8 rounded-full transition-all shadow-md inline-block">
             Ver Menú
           </a>
         </div>
@@ -39,8 +40,8 @@ import Swal from 'sweetalert2';
           <div class="text-slate-500">Cargando tus órdenes...</div>
         </div>
 
-        <div *ngIf="orders.length > 0" class="space-y-6">
-          <div *ngFor="let order of orders" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex flex-col md:flex-row justify-between gap-6">
+        <div *ngIf="orders.length > 0" class="space-y-4 sm:space-y-6">
+          <div *ngFor="let order of orders" class="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-sm border border-slate-100 flex flex-col md:flex-row justify-between gap-4 sm:gap-6">
             <div class="flex-1">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="text-xl font-bold text-slate-900">Orden #{{ order.id }}</h3>

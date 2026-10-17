@@ -12,21 +12,21 @@ import Swal from 'sweetalert2';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   template: `
-    <div class="min-h-screen bg-slate-950 py-12 px-6 text-slate-100">
-      <div class="max-w-2xl mx-auto mb-8 flex items-center justify-between">
-        <a routerLink="/" class="text-amber-400 font-bold hover:text-amber-300 flex items-center gap-2 transition-colors">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+    <div class="min-h-screen bg-slate-950 py-6 sm:py-12 px-3.5 sm:px-6 text-slate-100">
+      <div class="max-w-2xl mx-auto mb-4 sm:mb-8 flex items-center justify-between">
+        <a routerLink="/" class="text-amber-400 font-bold hover:text-amber-300 flex items-center gap-1.5 sm:gap-2 transition-colors text-xs sm:text-base">
+          <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
           Volver al Inicio
         </a>
-        <div class="flex items-center gap-3">
-          <img src="assets/logo.png" alt="King Dogos GDL" class="w-10 h-10 object-contain rounded-full border border-amber-500/40 shadow-lg shadow-amber-500/20" />
-          <span class="text-xs uppercase tracking-widest text-amber-400 font-bold">King Dogos GDL</span>
+        <div class="flex items-center gap-2 sm:gap-3">
+          <img src="assets/logo.png" alt="King Dogos GDL" class="w-8 h-8 sm:w-10 sm:h-10 object-contain rounded-full border border-amber-500/40 shadow-lg shadow-amber-500/20" />
+          <span class="text-[10px] sm:text-xs uppercase tracking-widest text-amber-400 font-bold">King Dogos GDL</span>
         </div>
       </div>
-      <div class="max-w-2xl mx-auto bg-slate-900 p-8 md:p-12 rounded-[2rem] shadow-2xl border border-amber-500/20">
+      <div class="max-w-2xl mx-auto bg-slate-900 p-5 sm:p-8 md:p-12 rounded-2xl sm:rounded-[2rem] shadow-2xl border border-amber-500/20">
         
-        <h2 class="text-3xl md:text-4xl font-black text-white mb-8 flex items-center gap-3">
-          <svg class="w-8 h-8 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-6 sm:mb-8 flex items-center gap-2.5 sm:gap-3">
+          <svg class="w-6 h-6 sm:w-8 sm:h-8 text-amber-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
           Mi Perfil King
         </h2>
 
