@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kingdogosgdl.vercel.app/sitemap.xml
