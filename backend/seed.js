@@ -131,11 +131,14 @@ async function seed() {
     });
 
     console.log('King Dogos GDL data seeded successfully');
-    process.exit(0);
   } catch (err) {
     console.error('Error seeding data:', err);
-    process.exit(1);
+    throw err;
   }
 }
 
-seed();
+if (require.main === module) {
+  seed().then(() => process.exit(0)).catch(() => process.exit(1));
+}
+
+module.exports = { seedData: seed };

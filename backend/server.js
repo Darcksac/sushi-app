@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const { sequelize } = require('./models');
+const { sequelize, Dish } = require('./models');
+const { seedData } = require('./seed');
 const path = require('path');
 
 const app = express();
@@ -34,8 +35,18 @@ const PORT = process.env.PORT || 3000;
 
 const syncOptions = sequelize.getDialect() === 'sqlite' ? {} : { alter: true };
 
-sequelize.sync(syncOptions).then(() => {
+sequelize.sync(syncOptions).then(async () => {
   console.log('Database connected and synced');
+  try {
+    const count = await Dish.count();
+    if (count === 0) {
+      console.log('No dishes detected. Populating initial King Dogos GDL data...');
+      await seedData();
+    }
+  } catch (seedErr) {
+    console.error('Error checking or running seed:', seedErr);
+  }
+
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
